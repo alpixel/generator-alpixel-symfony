@@ -1,0 +1,20 @@
+{
+  "name": "generator-alpixel-symfony",
+  "version": "0.1.0",
+  "description": "",
+  "files": [
+    "app"
+  ],
+  "main": "app/index.js",
+  "keywords": ["yeoman-generator"],
+  "dependencies": {
+    "yeoman-generator": "^0.20.2",
+    "chalk": "^0.5.0",
+    "fs-extra": "^0.22.1",
+    "js-yaml": "^3.2.3",
+    "rimraf": "^2.4.2",
+    "request": "^2.69.0",
+    "lodash": "^4.2.0",
+    "yosay": "^0.3.0"
+  }
+}
