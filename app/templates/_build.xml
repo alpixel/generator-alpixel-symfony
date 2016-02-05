@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="<%= appname %>" default="build">
+  <property name="workspace" value="${basedir}" />
+  <property name="sourcedir" value="${basedir}/src" />
+  <property name="builddir" value="${workspace}/app/build" />
+
+  <target name="build"
+  depends="parameters,vendors,bower,drop-db,create-db,cache,assetic,sensio-security-checker,warmup,fixtures,tools-parallel" />
+
+  <target name="tools-parallel" description="Run tools in parallel">
+    <parallel threadCount="2">
+      <antcall target="phpcs"/>
+      <antcall target="lint" />
+    </parallel>
+  </target>
+
+  <target name="parameters" description="Copy parameters file to real folder">
+      <copy file="${basedir}/app/build/parameters.yml.dist" todir="${basedir}/app/config/" overwrite="true"/>
+      <exec executable="sed">
+        <arg value="-i" />
+        <arg value="--" />
+        <arg value="s/jenkins_database/${databaseName}/g" />
+        <arg value="${basedir}/app/config/parameters.yml.dist" />
+      </exec>
+  </target>
+
+  <target name="vendors" description="Update vendors">
+    <exec executable="composer" failonerror="true">
+        <arg value="update" />
+        <arg value="--prefer-dist" />
+        <arg value="--no-interaction" />
+    </exec>
+  </target>
+
+  <target name="bower" description="Update bower">
+    <exec executable="bower" failonerror="true">
+        <arg value="install" />
+    </exec>
+  </target>
+
+  <target name="lint" description="Perform syntax check of sourcecode files">
+    <apply executable="php" failonerror="true">
+    <arg value="-l" />
+    <fileset dir="${sourcedir}">
+      <include name="**/*.php" />
+      <modified />
+    </fileset>
+    <fileset dir="${basedir}/src/">
+      <include name="**/*Test.php" />
+      <modified />
+    </fileset>
+    </apply>
+  </target>
+
+
+
+  <target name="phpcs" description="Find coding standard violations using PHP_CodeSniffer and print human readable output. Intended for usage on the command line before committing.">
+    <exec executable="phpcs">
+      <arg value="--standard=Symfony2" />
+      <arg value="--extensions=php" />
+      <arg value="--report-diff=${builddir}/checkstyle.diff" />
+      <arg path="${sourcedir}" />
+    </exec>
+    <exec executable="phpcs">
+      <arg value="--standard=Symfony2" />
+      <arg value="--extensions=php" />
+      <arg value="--report=checkstyle" />
+      <arg value="--report-file=${builddir}/checkstyle.xml" />
+      <arg path="${sourcedir}" />
+    </exec>
+  </target>
+
+  <target name="drop-db" description="Drop database">
+    <exec executable="php" failonerror="true">
+        <arg value="bin/console" />
+        <arg value="doctrine:schema:drop" />
+        <arg value="--force" />
+        <arg value="--no-interaction" />
+    </exec>
+  </target>
+
+  <target name="create-db" description="Create the database">
+    <exec executable="php" failonerror="true">
+        <arg value="bin/console" />
+        <arg value="doctrine:schema:create" />
+        <arg value="--no-interaction" />
+    </exec>
+  </target>
+
+  <target name="updatedb" description="Update database">
+    <exec executable="php" failonerror="true">
+        <arg value="bin/console" />
+        <arg value="doctrine:schema:update" />
+        <arg value="--force" />
+        <arg value="--complete" />
+    </exec>
+  </target>
+
+  <target name="fixtures" description="Load fixtures">
+    <exec executable="php" failonerror="true">
+        <arg value="bin/console" />
+        <arg value="doctrine:fixtures:load" />
+        <arg value="--no-interaction" />
+    </exec>
+  </target>
+
+  <target name="cache" description="Empty cache">
+    <exec executable="php" failonerror="true">
+        <arg value="bin/console" />
+        <arg value="cache:clear" />
+        <arg value="--env=test" />
+    </exec>
+  </target>
+
+  <target name="warmup" description="Warmup cache">
+    <exec executable="php" failonerror="true">
+        <arg value="bin/console" />
+        <arg value="cache:warmup" />
+        <arg value="--env=test" />
+    </exec>
+  </target>
+
+  <target name="assetic" description="Dump assetic">
+    <exec executable="php" failonerror="true">
+        <arg value="bin/console" />
+        <arg value="assetic:dump" />
+        <arg value="--env=test" />
+    </exec>
+  </target>
+
+  <target name="sensio-security-checker" description="Check security issue">
+    <exec executable="sensio-security-checker" failonerror="true">
+        <arg value="security:check" />
+    </exec>
+  </target>
+
+</project>

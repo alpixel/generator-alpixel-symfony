@@ -1,24 +1,34 @@
-
 ._*
 .DS_Store
+*.sublime-*
 .vagrant
+*.php~
+Thumbs.db
+koala-config.json
+.smbdelete*
+.ida
 
 # Symfony
 /web/bundles/
 /app/bootstrap.php.cache
-/app/cache/*
+*/cache/*
+*/logs/*
+*/sessions/*
 /app/config/parameters.yml
-/app/logs/*
 /build/
 /vendor/
 /bin/
 /composer.phar
 
-# Yeoman
+# Custom
 node_modules
-.tmp
-.sass-cache
-web/libs
-web/dist
+web/upload/filters
+web/upload/*
+web/bundles/*
+web/assetic
+web/js
 web/css
-app/dist
+behat.yml
+composer.lock
+Gruntfile.js.*
+sitemap.*xml*

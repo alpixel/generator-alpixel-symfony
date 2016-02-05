@@ -11,162 +11,100 @@ var child_process = require('child_process');
 var request = require('request');
 var _ = require('lodash');
 var Download = require('download');
+var htmlWiring = require("html-wiring");
+
+var symfonyDistribution = {
+  host: 'https://symfony.com/download?v=Symfony_Standard_Vendors_',
+  commit: 'latest',
+  ext: 'zip'
+};
 
 module.exports = yeoman.Base.extend({
 
   initializing: function () {
     this.pkg = require('../package.json');
-    var ALPIXEL = chalk.bgYellow.bold.white('## ALPIXEL ##');
-    this.log(chalk.bgYellow.bold.white('## ALPIXEL ##'));
+    var ALPIXEL = chalk.yellow.bgBlack.white('\n          _      _____ _______   ________ _\n     /\   | |    |  __ \_   _\ \ / /  ____| |\n    /  \  | |    | |__) || |  \ V /| |__  | |\n   / /\ \ | |    |  ___/ | |   > < |  __| | |\n  / ____ \| |____| |    _| |_ / . \| |____| |____\n /_/    \_\______|_|   |_____/_/ \_\______|______|');
+    this.log(ALPIXEL);
   },
 
-  askSymfonyStandard: function () {
-    var done = this.async();
+  // getTagSymfony: function () {
+  //   var done = this.async();
+  //   var invalidEntries = 0;
 
-    this.SymfonyStandardDistribution = {
-      host: 'https://symfony.com/download?v=Symfony_Standard_Vendors_',
-      commit: 'latest',
-      ext: 'zip'
-    };
+  //   function filterByTag(obj) {
+  //     if ('installable' === obj || 'non_installable' === obj) {
+  //       invalidEntries++;
+  //       return false;
+  //     } else {
+  //       return true;
+  //     }
+  //   }
 
-    var prompts = [{
-      type: 'confirm',
-      name: 'symfonyStandard',
-      message: 'Would you like to use the Symfony "Standard Edition" distribution ' + this.SymfonyStandardDistribution.commit,
-      default: true
-    }];
+  //   request('https://symfony.com/versions.json', function (error, response, body) {
+  //     if (!error && response.statusCode === 200) {
+  //       this.parsed = JSON.parse(body);
+  //       var filtered = Object.keys(this.parsed);
+  //       this.versionSf2 = filtered.filter(filterByTag);
+  //       done();
+  //     } else {
+  //       console.log(chalk.red('A problem occurred'), error);
+  //     }
+  //   }.bind(this));
+  // },
 
-    this.prompt(prompts, function (answers) {
-      if (answers.symfonyStandard) {
-        this.symfonyDistribution = this.SymfonyStandardDistribution;
-      } else {
-        this.symfonyDistribution = null;
-      }
-      done();
-    }.bind(this));
-  },
+  // _unzip: function (archive, destination, opts, cb) {
+  //   if (_.isFunction(opts) && !cb) {
+  //     cb = opts;
+  //     opts = { extract: true };
+  //   }
 
-  getTagSymfony: function () {
-    var done = this.async();
-    var invalidEntries = 0;
+  //   opts = _.assign({ extract: true }, opts);
 
-    function filterByTag(obj) {
-      if ('installable' === obj || 'non_installable' === obj) {
-        invalidEntries++;
-        return false;
-      } else {
-        return true;
-      }
-    }
+  //   var log = this.log.write()
+  //     .info('... Fetching %s ...', archive)
+  //     .info(chalk.yellow('This might take a few moments'));
 
-    request('https://symfony.com/versions.json', function (error, response, body) {
-      if (!error && response.statusCode === 200) {
-        this.parsed = JSON.parse(body);
-        var filtered = Object.keys(this.parsed);
-        this.versionSf2 = filtered.filter(filterByTag);
-        done();
-      } else {
-        console.log(chalk.red('A problem occurred'), error);
-      }
-    }.bind(this));
-  },
+  //   var download = new Download(opts)
+  //     .get(archive)
+  //     .dest(destination)
+  //     .use(function (res) {
+  //       res.on('data', function () {});
+  //     });
 
-  askSymfonyCustom: function () {
-    if (this.symfonyDistribution === null) {
-      var done = this.async();
-      console.log('Please provide GitHub details of the Symfony distribution you would like to use.');
+  //   download.run(function (err) {
+  //     if (err) {
+  //       return cb (err);
+  //     }
 
-      var prompts = [{
-        type: 'list',
-        name: 'symfonyCommit',
-        message: 'Commit (commit/branch/tag)',
-        default: 'lts',
-        choices: this.versionSf2
-      }];
+  //     log.write().ok('Done in ' + destination).write();
+  //     cb();
+  //   });
+  // },
 
-      this.prompt(prompts, function (answers) {
-        this.symfonyDistribution = {
-          host: 'https://symfony.com/download?v=Symfony_Standard_Vendors_',
-          commit: answers.symfonyCommit,
-          ext: 'zip'
-        };
+  // symfonyBase: function () {
+  //   var done = this.async();
+  //   var symfonyCommit = this.parsed[symfonyDistribution.commit];
 
-        done();
-      }.bind(this));
-    }
-  },
+  //   var appPath = this.destinationRoot();
+  //   var repo = symfonyDistribution.host + symfonyCommit  + '.' + symfonyDistribution.ext;
 
-  _unzip: function (archive, destination, opts, cb) {
-    if (_.isFunction(opts) && !cb) {
-      cb = opts;
-      opts = { extract: true };
-    }
-
-    opts = _.assign({ extract: true }, opts);
-
-    var log = this.log.write()
-      .info('... Fetching %s ...', archive)
-      .info(chalk.yellow('This might take a few moments'));
-
-    var download = new Download(opts)
-      .get(archive)
-      .dest(destination)
-      .use(function (res) {
-        res.on('data', function () {});
-      });
-
-    download.run(function (err) {
-      if (err) {
-        return cb (err);
-      }
-
-      log.write().ok('Done in ' + destination).write();
-      cb();
-    });
-  },
-
-  symfonyBase: function () {
-    var done = this.async();
-    var symfonyCommit = this.parsed[this.symfonyDistribution.commit];
-
-    var appPath = this.destinationRoot();
-    var repo = this.symfonyDistribution.host + symfonyCommit  + '.' + this.symfonyDistribution.ext;
-
-    this._unzip(repo, appPath, function (err, remote) {
-      if (err) {
-      console.log(' 💩 ' + chalk.red(' ARRRRR '));
-        console.log(err);
-        return;
-      } else {
-        console.log(' 👍 ' + chalk.green(' Download success ! '));
-        done();
-      }
-    });
-  },
+  //   this._unzip(repo, appPath, function (err, remote) {
+  //     if (err) {
+  //     console.log(' 💩 ' + chalk.red(' ARRRRR '));
+  //       console.log(err);
+  //       return;
+  //     } else {
+  //       console.log(' 👍 ' + chalk.green(' Download success ! '));
+  //       done();
+  //     }
+  //   });
+  // },
 
   moveSymfonyBase: function () {
     var done = this.async();
-    //   this.fs.copyTpl(
-    //   this.templatePath('index.html'),
-    //   this.destinationPath('public/index.html'),
-    //   { title: 'Templating with Yeoman' }
-    // );
-    fs.move('./Symfony/LICENSE', '.', function (err) {
+    fs.copy('./Symfony/', '.', function (err) {
       done();
     });
-  },
-
-  installComposer: function () {
-    if (this.symfonyWithAssetic) {
-      var done = this.async();
-      this.pathComposer = 'php ./composer.phar';
-      child_process.exec('php -r "readfile(\'https://getcomposer.org/installer\');" | php', function (error, stdout, stderr) {
-        console.log(chalk.green('Installing composer locally.'));
-        console.log('See ' + chalk.yellow('http://getcomposer.org')  + ' for more details on composer.');
-        console.log('');
-        done();
-      });
-    }
   },
 
   checkBower: function () {
@@ -208,4 +146,95 @@ module.exports = yeoman.Base.extend({
       }.bind(this));
     }
   },
+
+  writing: function() {
+    // fs.remove('./Symfony/');
+    fs.remove('./vendor/');
+    fs.remove('./app/Resources/views');
+    fs.remove(this.destinationPath('./src'));
+    fs.remove('./README.md');
+    fs.remove('./LICENSE');
+
+    fs.copySync(this.templatePath('app'), this.destinationPath('app'));
+    fs.copySync(this.templatePath('web'), this.destinationPath('web'));
+
+    this.fs.copy(
+      this.templatePath('_gitignore'),
+      this.destinationPath('.gitignore')
+    );
+
+    this.template('_bower.json', 'bower.json');
+    this.template('_package.json', 'package.json');
+    this.template('_editorconfig', '.editorconfig');
+    this.template('_bowerrc', '.bowerrc');
+    this.template('Vagrantfile', 'Vagrantfile');
+    this.template('README.md', 'README.md');
+    this.template('_build.xml', 'build.xml');
+    this.template('_Gulpfile.js', 'Gulpfile.js');
+
+    this.fs.copy(
+      this.templatePath('app/build/parameters.yml.dist'),
+      this.destinationPath('app/build/parameters.yml.dist')
+    );
+  },
+
+
+  updateConfig: function () {
+    var config = yaml.safeLoad(fs.readFileSync('app/config/config.yml'));
+
+    config['parameters']['theme'] = 'default';
+    config['parameters']['locale'] = 'fr';
+
+    config['stof_doctrine_extensions'] = {
+      'default_locale': 'fr_FR',
+      'orm': {
+        'default': {
+          'timestampable': true
+        }
+      }
+    };
+
+    config['twig']['paths'] = ["%kernel.root_dir%/Resources/themes/default/views/"];
+
+    var newConf = yaml.dump(config, {indent: 4});
+    fs.writeFileSync('app/config/config.yml', newConf);
+  },
+
+  install: {
+    installComponents: function () {
+      fs.copySync(this.templatePath('src'), this.destinationPath('src'));
+      this.installDependencies({
+        bower: true,
+        npm: true,
+        skipInstall: false
+      });
+    },
+    updateAppKernel: function () {
+      var appKernelPath = './app/AppKernel.php';
+      var appKernelContents = htmlWiring.readFileAsString('./app/AppKernel.php');
+      var newAppKernelContents = appKernelContents.replace('new Doctrine\\Bundle\\DoctrineBundle\\DoctrineBundle(),\n            ', '');
+      newAppKernelContents = newAppKernelContents.replace('new Sensio\\Bundle\\FrameworkExtraBundle\\SensioFrameworkExtraBundle(),', 'new Sensio\\Bundle\\FrameworkExtraBundle\\SensioFrameworkExtraBundle(),\n            //Doctrine\n            new Doctrine\\Bundle\\DoctrineBundle\\DoctrineBundle(),\n            new Stof\\DoctrineExtensionsBundle\\StofDoctrineExtensionsBundle(),');
+      newAppKernelContents = newAppKernelContents.replace('Sensio\\Bundle\\GeneratorBundle\\SensioGeneratorBundle();', 'Sensio\\Bundle\\GeneratorBundle\\SensioGeneratorBundle();\n            $bundles[] = new Doctrine\\Bundle\\FixturesBundle\\DoctrineFixturesBundle();\n            $bundles[] = new Elao\\WebProfilerExtraBundle\\WebProfilerExtraBundle();');
+      fs.writeFileSync(appKernelPath, newAppKernelContents);
+    },
+    updateComposer: function () {
+      var appKernelPath = './composer.json';
+      var appKernelContents = htmlWiring.readFileAsString('./composer.json');
+      var newAppKernelContents = appKernelContents.replace('\"relative\"', '\"symlink\"');
+      fs.writeFileSync(appKernelPath, newAppKernelContents);
+      this.spawnCommand('composer', ['require', '--no-update', 'stof/doctrine-extensions-bundle']);
+      this.spawnCommand('composer', ['require', '--no-update', '--dev',
+        'elao/web-profiler-extra-bundle',
+        'doctrine/doctrine-fixtures-bundle',
+        'fzaninotto/faker',
+        'nelmio/alice'
+      ]);
+      this.spawnCommand('composer', ['update']);
+    },
+  },
+
+  end: {
+
+  }
+
 });

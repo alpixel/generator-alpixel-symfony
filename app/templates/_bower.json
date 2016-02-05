@@ -1,0 +1,29 @@
+{
+  "name": "<%= appname %>",
+  "version": "1.0.0",
+  "authors": [
+    "ALPIXEL <dev@alpixel.fr>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "web/lib/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.2.0",
+    "font-awesome": "4.*",
+    "ionicons": "2.*",
+    "backstretch": "2.*",
+    "bootstrap": "3.*",
+    "fancybox": "2.*",
+    "flexslider": "2.5.*",
+    "fastclick": "1.*",
+    "html5shiv": "3.*",
+    "jquery.scrollTo": "^2.1.2",
+    "wow.js": "1.*"
+  }
+}
