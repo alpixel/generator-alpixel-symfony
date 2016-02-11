@@ -25,5 +25,8 @@
     "html5shiv": "3.*",
     "jquery.scrollTo": "^2.1.2",
     "wow.js": "1.*"
+  },
+  "resolutions": {
+    "jquery": "~2.2.0"
   }
 }
