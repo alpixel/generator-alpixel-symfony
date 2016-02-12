@@ -6,6 +6,7 @@ node_js:
   - "stable"
 
 before_script:
+  - npm install
   - npm install -g yo generator-alpixel-symfony
 
 script: yo alpixel-symfony
