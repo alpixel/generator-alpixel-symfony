@@ -106,7 +106,7 @@ gulp.task('vendor_js', function() {
 
 
 gulp.task('imagemin', function() {
-  return gulp.src('web/img/*')
+  return gulp.src('web/img/**/*')
       .pipe(imagemin({
           progressive: true,
           svgoPlugins: [{removeViewBox: false}]
@@ -114,6 +114,10 @@ gulp.task('imagemin', function() {
       .pipe(gulp.dest('web/img'));
 });
 
+gulp.task('watch', function() {
+    gulp.watch(path.theme_dir + '/less/front.less', ['app_less']);
+    gulp.watch(path.theme_dir + '/js/**/*.js', ['app_js']);
+});
 
 gulp.task('default', [
   'vendor_css',
