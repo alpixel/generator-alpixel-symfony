@@ -81,6 +81,73 @@ module.exports = yeoman.Base.extend({
     });
   },
 
+  askMultilingual: function() {
+    var done = this.async();
+
+    var prompts = [{
+      type: 'confirm',
+      name: 'isMultilingual',
+      message: 'Est-ce que le site est multilingue ?',
+      default: false,
+    }];
+
+    this.prompt(prompts, function (answers) {
+      this.isMultilingual = answers.isMultilingual;
+      done();
+    }.bind(this));
+  },
+
+  askBundles: function() {
+    var done = this.async();
+    var prompts = [{
+        type: 'checkbox',
+        name: 'bundlesCustom',
+        message: 'Est-ce que je dois installer des bundles/fonctionnalités ?',
+        choices: [
+          {
+            name: 'Sonata',
+            value: 'sonata-project',
+            checked: true
+          },
+          {
+            name: 'AlpixelUserBundle',
+            value: 'alpixel/userbundle',
+            checked: true
+          },
+          {
+            name: 'AlpixelCMSBundle',
+            value: 'alpixel/cmsbundle',
+            checked: true
+          },
+          {
+            name: 'AlpixelMenuBundle',
+            value: 'alpixel/menu-bundle',
+            checked: true
+          },
+          {
+            name: 'AlpixelSEOBundle',
+            value: 'alpixel/seobundle',
+            checked: true
+          },
+          {
+            name: 'AlpixelCronBundle',
+            value: 'alpixel/cronbundle',
+            checked: false
+          },
+          {
+            name: 'FOSElasticaBundle',
+            value: 'friendsofsymfony/elastica-bundle',
+            checked: false,
+          }
+        ]
+    }];
+
+    this.prompt(prompts, function (answers) {
+      this.bundles = answers;
+      done();
+    }.bind(this));
+  },
+
   symfonyBase: function () {
     var done = this.async();
     var symfonyCommit = this.parsed[symfonyDistribution.commit];
@@ -222,6 +289,104 @@ module.exports = yeoman.Base.extend({
     fs.writeFileSync('app/config/config.yml', newConf);
   },
 
+  updateAppKernel: function () {
+    var appKernelPath = './app/AppKernel.php';
+    var appKernelContents = htmlWiring.readFileAsString('./app/AppKernel.php');
+    var newAppKernelContents = appKernelContents.replace('new Doctrine\\Bundle\\DoctrineBundle\\DoctrineBundle(),\n            ', '');
+    newAppKernelContents = newAppKernelContents.replace('new Sensio\\Bundle\\FrameworkExtraBundle\\SensioFrameworkExtraBundle(),', 'new Sensio\\Bundle\\FrameworkExtraBundle\\SensioFrameworkExtraBundle(),\n            //Doctrine\n            new Doctrine\\Bundle\\DoctrineBundle\\DoctrineBundle(),\n            new Stof\\DoctrineExtensionsBundle\\StofDoctrineExtensionsBundle(),');
+    newAppKernelContents = newAppKernelContents.replace('Sensio\\Bundle\\GeneratorBundle\\SensioGeneratorBundle();', 'Sensio\\Bundle\\GeneratorBundle\\SensioGeneratorBundle();\n            $bundles[] = new Doctrine\\Bundle\\FixturesBundle\\DoctrineFixturesBundle();\n            $bundles[] = new Elao\\WebProfilerExtraBundle\\WebProfilerExtraBundle();');
+
+    var customBundles = "";
+    customBundles += "\n";
+
+    if (this.bundles['bundlesCustom'].indexOf('sonata-admin') !== -1) {
+      customBundles += "            // Admin" + "\n";
+      customBundles += "            new Sonata\\CoreBundle\\SonataCoreBundle()," + "\n";
+      customBundles += "            new Sonata\\DoctrineORMAdminBundle\\SonataDoctrineORMAdminBundle()," + "\n";
+      customBundles += "            new Sonata\\AdminBundle\\SonataAdminBundle()," + "\n";
+      customBundles += "            new Sonata\\BlockBundle\\SonataBlockBundle()," + "\n";
+      customBundles += "            new Ivory\\CKEditorBundle\\IvoryCKEditorBundle()," + "\n";
+      customBundles += "\n";
+    }
+
+    if (this.isMultilingual) {
+      customBundles += "            //i18n" + "\n";
+      customBundles += "            new Lunetics\\LocaleBundle\\LuneticsLocaleBundle()," + "\n";
+      customBundles += "            new JMS\\I18nRoutingBundle\\JMSI18nRoutingBundle()," + "\n";
+      customBundles += "            new JMS\\TranslationBundle\\JMSTranslationBundle()," + "\n";
+      customBundles += "\n";
+    }
+
+    customBundles += "            //Alpixel" + "\n";
+    if (this.bundles['bundlesCustom'].indexOf('alpixel/userbundle') !== -1) {
+      customBundles += "            new Alpixel\\Bundle\\UserBundle\\UserBundle()," + "\n";
+    }
+
+    if (this.bundles['bundlesCustom'].indexOf('alpixel/cmsbundle') !== -1) {
+      customBundles += "            new Alpixel\\Bundle\\CMSBundle\\CMSBundle()," + "\n";
+    }
+
+    if (this.bundles['bundlesCustom'].indexOf('alpixel/cronbundle') !== -1) {
+      customBundles += "            new Alpixel\\Bundle\\CronBundle\\CronBundle()," + "\n";
+    }
+
+    if (this.bundles['bundlesCustom'].indexOf('alpixel/menu-bundle') !== -1) {
+      customBundles += "            new Alpixel\\Bundle\\MenuBundle\\AlpixelMenuBundle()," + "\n";
+    }
+
+    if (this.bundles['bundlesCustom'].indexOf('alpixel/seobundle') !== -1) {
+      customBundles += "            new Alpixel\\Bundle\\SEOBundle\\AlpixelSEOBundle()," + "\n";
+    }
+
+    customBundles += "\n";
+    customBundles += "            new AppBundle\\AppBundle(),";
+    newAppKernelContents = newAppKernelContents.replace('new AppBundle\\AppBundle(),', customBundles);
+
+    fs.writeFileSync(appKernelPath, newAppKernelContents);
+  },
+
+  requireBundles: function() {
+    var done = this.async();
+
+    var bundles = ['stof/doctrine-extensions-bundle'];
+
+    for (var i = 0; i < this.bundles['bundlesCustom'].length; i++) {
+      if (this.bundles['bundlesCustom'][i] == 'sonata-project') {
+        bundles = bundles.concat([
+          'sonata-project/block-bundle:@dev', 'sonata-project/admin-bundle:@dev',
+          'sonata-project/doctrine-orm-admin-bundle:@dev', 'sonata-project/core-bundle:@dev'
+        ]);
+      } else {
+        bundles = bundles.concat([this.bundles['bundlesCustom'][i]]+':@dev');
+      }
+    }
+
+    if (this.isMultilingual) {
+      bundles = bundles.concat([
+        'lunetics/locale-bundle:@dev', 'jms/i18n-routing-bundle:@dev',
+        'jms/translation-bundle:@dev'
+      ]);
+    }
+
+    var sc = this.spawnCommand('composer', ['require', '--no-update'].concat(bundles));
+    sc.on('close', function(code) {
+      done();
+    });
+  },
+
+  requireBundleDev: function() {
+    var done = this.async();
+    var sc = this.spawnCommand('composer', ['require', '--no-update', '--dev',
+      'elao/web-profiler-extra-bundle',
+      'doctrine/doctrine-fixtures-bundle',
+      'fzaninotto/faker',
+      'nelmio/alice'
+    ]);
+    sc.on('close', function(code) {
+      done();
+    });
+  },
+
   install: {
     installComponents: function () {
       fs.copySync(this.templatePath('src'), this.destinationPath('src'));
@@ -230,40 +395,17 @@ module.exports = yeoman.Base.extend({
         bower: true,
         skipInstall: false
       });
-
       // this.spawnCommand('bower', ['install', '--config.interactive=false']);
     },
-    updateAppKernel: function () {
-      var appKernelPath = './app/AppKernel.php';
-      var appKernelContents = htmlWiring.readFileAsString('./app/AppKernel.php');
-      var newAppKernelContents = appKernelContents.replace('new Doctrine\\Bundle\\DoctrineBundle\\DoctrineBundle(),\n            ', '');
-      newAppKernelContents = newAppKernelContents.replace('new Sensio\\Bundle\\FrameworkExtraBundle\\SensioFrameworkExtraBundle(),', 'new Sensio\\Bundle\\FrameworkExtraBundle\\SensioFrameworkExtraBundle(),\n            //Doctrine\n            new Doctrine\\Bundle\\DoctrineBundle\\DoctrineBundle(),\n            new Stof\\DoctrineExtensionsBundle\\StofDoctrineExtensionsBundle(),');
-      newAppKernelContents = newAppKernelContents.replace('Sensio\\Bundle\\GeneratorBundle\\SensioGeneratorBundle();', 'Sensio\\Bundle\\GeneratorBundle\\SensioGeneratorBundle();\n            $bundles[] = new Doctrine\\Bundle\\FixturesBundle\\DoctrineFixturesBundle();\n            $bundles[] = new Elao\\WebProfilerExtraBundle\\WebProfilerExtraBundle();');
-      fs.writeFileSync(appKernelPath, newAppKernelContents);
-    },
-    installBundle: function () {
+    installBundle: function() {
       var appKernelPath = './composer.json';
       var appKernelContents = htmlWiring.readFileAsString('./composer.json');
       var newAppKernelContents = appKernelContents.replace('\"relative\"', '\"symlink\"');
       fs.writeFileSync(appKernelPath, newAppKernelContents);
-
-      var yo = this;
-      var sc = this.spawnCommand('composer', ['require', '--no-update', 'stof/doctrine-extensions-bundle']);
-      sc.on('close', function(code) {
-          var sc2 = yo.spawnCommand('composer', ['require', '--no-update', '--dev',
-            'elao/web-profiler-extra-bundle',
-            'doctrine/doctrine-fixtures-bundle',
-            'fzaninotto/faker',
-            'nelmio/alice'
-          ]);
-          sc2.on('close', function(code) {
-            yo.spawnCommand('composer', ['update']);
-          });
-      });
-    },
+      this.spawnCommand('composer', ['update']);
+    }
   },
   end: {
-
+    // console.log(' 👍 Installation terminée ! Ne pas oublier d\'optimiser le app.php en décommentant les lignes appropriées');
   }
-
 });
