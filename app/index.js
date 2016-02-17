@@ -15,7 +15,7 @@ var htmlWiring = require("html-wiring");
 
 var symfonyDistribution = {
   host: 'https://symfony.com/download?v=Symfony_Standard_Vendors_',
-  commit: 'latest',
+  commit: 'lts',
   ext: 'zip'
 };
 
@@ -111,7 +111,7 @@ module.exports = yeoman.Base.extend({
           },
           {
             name: 'AlpixelUserBundle',
-            value: 'alpixel/userbundle',
+            value: 'alpixel/userbundle:dev-feature/v2',
             checked: true
           },
           {
@@ -121,7 +121,7 @@ module.exports = yeoman.Base.extend({
           },
           {
             name: 'AlpixelMenuBundle',
-            value: 'alpixel/menu-bundle',
+            value: 'alpixel/menu-bundle:@dev', 
             checked: true
           },
           {
@@ -244,6 +244,11 @@ module.exports = yeoman.Base.extend({
       this.destinationPath('.gitignore')
     );
 
+    this.fs.copy(
+      this.templatePath('src'),
+      this.destinationPath('src')
+    );
+
     this.template('_bower.json', 'bower.json');
     this.template('_package.json', 'package.json');
     this.template('_editorconfig', '.editorconfig');
@@ -252,11 +257,28 @@ module.exports = yeoman.Base.extend({
     this.template('README.md', 'README.md');
     this.template('_build.xml', 'build.xml');
     this.template('_Gulpfile.js', 'Gulpfile.js');
+  },
 
-    this.fs.copy(
-      this.templatePath('app/build/parameters.yml.dist'),
-      this.destinationPath('app/build/parameters.yml.dist')
-    );
+  changeParameters: function() {
+    var config = yaml.safeLoad(fs.readFileSync('app/config/parameters.yml.dist'));
+
+    config['admin_path'] = '~';
+    config['theme'] = 'front';
+    config['lib_dir'] = 'lib';
+
+    if (this.bundles['bundlesCustom'].indexOf('sonata-admin') !== -1) {
+      config['elastic_index'] = '~';
+      config['elastic_host'] = '~';
+      config['elastic_port'] = '~';
+    }
+
+    config['default_locale'] = 'fr';  
+    if (this.isMultilingual) {
+      config['enabled_locales'] = ['fr'];
+    }
+
+    var newConf = yaml.dump(config, {indent: 4});
+    fs.writeFileSync('app/config/parameters.yml.dist', newConf);
   },
 
   moveChuck: function () {
@@ -270,9 +292,6 @@ module.exports = yeoman.Base.extend({
 
   updateConfig: function () {
     var config = yaml.safeLoad(fs.readFileSync('app/config/config.yml'));
-
-    config['parameters']['theme'] = 'default';
-    config['parameters']['locale'] = 'fr';
 
     config['stof_doctrine_extensions'] = {
       'default_locale': 'fr_FR',
@@ -335,7 +354,7 @@ module.exports = yeoman.Base.extend({
     }
 
     if (this.bundles['bundlesCustom'].indexOf('alpixel/seobundle') !== -1) {
-      customBundles += "            new Alpixel\\Bundle\\SEOBundle\\AlpixelSEOBundle()," + "\n";
+      customBundles += "            new Alpixel\\Bundle\\SEOBundle\\SEOBundle()," + "\n";
     }
 
     customBundles += "\n";
@@ -357,14 +376,14 @@ module.exports = yeoman.Base.extend({
           'sonata-project/doctrine-orm-admin-bundle:@dev', 'sonata-project/core-bundle:@dev'
         ]);
       } else {
-        bundles = bundles.concat([this.bundles['bundlesCustom'][i]]+':@dev');
+        bundles = bundles.concat([this.bundles['bundlesCustom'][i]]);
       }
     }
 
     if (this.isMultilingual) {
       bundles = bundles.concat([
-        'lunetics/locale-bundle:@dev', 'jms/i18n-routing-bundle:@dev',
-        'jms/translation-bundle:@dev'
+        'lunetics/locale-bundle', 'jms/i18n-routing-bundle',
+        'jms/translation-bundle'
       ]);
     }
 
@@ -388,21 +407,21 @@ module.exports = yeoman.Base.extend({
   },
 
   install: {
-    installComponents: function () {
-      fs.copySync(this.templatePath('src'), this.destinationPath('src'));
-      this.installDependencies({
-        npm: true,
-        bower: true,
-        skipInstall: false
-      });
-      // this.spawnCommand('bower', ['install', '--config.interactive=false']);
-    },
+    // installComponents: function () {
+    //   fs.copySync(this.templatePath('src'), this.destinationPath('src'));
+    //   this.installDependencies({
+    //     npm: true,
+    //     bower: true,
+    //     skipInstall: false
+    //   });
+    //   // this.spawnCommand('bower', ['install', '--config.interactive=false']);
+    // },
     installBundle: function() {
       var appKernelPath = './composer.json';
       var appKernelContents = htmlWiring.readFileAsString('./composer.json');
       var newAppKernelContents = appKernelContents.replace('\"relative\"', '\"symlink\"');
       fs.writeFileSync(appKernelPath, newAppKernelContents);
-      this.spawnCommand('composer', ['update']);
+      this.spawnCommand('composer', ['update', '--ignore-platform-reqs']);
     }
   },
   end: {
