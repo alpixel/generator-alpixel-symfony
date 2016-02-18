@@ -6,6 +6,7 @@ var chalk = require('chalk');
 var path = require('path');
 var yaml = require('js-yaml');
 var fs = require('fs-extra');
+var merge = require('merge');
 var rmdir = require('rimraf');
 var child_process = require('child_process');
 var request = require('request');
@@ -228,37 +229,46 @@ module.exports = yeoman.Base.extend({
     });
   },
 
-  writing: function() {
-    fs.remove('./Symfony/');
-    fs.remove('./vendor/');
-    fs.remove('./app/Resources/views');
-    fs.remove(this.destinationPath('./src'));
-    fs.remove('./README.md');
-    fs.remove('./LICENSE');
+  writing: {
+    copyFiles: function() {
+      fs.remove('./Symfony/');
+      fs.remove('./vendor/');
+      fs.remove('./app/Resources/views');
+      fs.remove(this.destinationPath('./src'));
+      fs.remove('./README.md');
+      fs.remove('./LICENSE');
 
-    fs.copySync(this.templatePath('app'), this.destinationPath('app'));
-    fs.copySync(this.templatePath('web'), this.destinationPath('web'));
+      fs.copySync(this.templatePath('app'), this.destinationPath('app'));
+      fs.copySync(this.templatePath('web'), this.destinationPath('web'));
 
-    this.fs.copy(
-      this.templatePath('_gitignore'),
-      this.destinationPath('.gitignore')
-    );
+      this.fs.copy(
+        this.templatePath('_gitignore'),
+        this.destinationPath('.gitignore')
+      );
 
-    this.template('_bower.json', 'bower.json');
-    this.template('_package.json', 'package.json');
-    this.template('_editorconfig', '.editorconfig');
-    this.template('_bowerrc', '.bowerrc');
-    this.template('Vagrantfile', 'Vagrantfile');
-    this.template('README.md', 'README.md');
-    this.template('_build.xml', 'build.xml');
-    this.template('_Gulpfile.js', 'Gulpfile.js');
+      this.template('app/config/routing.yml', 'app/config/routing.yml');
+      this.template('new_config.yml', 'new_config.yml');
+      this.template('app/Resources/themes/default/views/layout/base.html.twig', 'app/Resources/themes/default/views/layout/base.html.twig');
+      this.template('_bower.json', 'bower.json');
+      this.template('_package.json', 'package.json');
+      this.template('_editorconfig', '.editorconfig');
+      this.template('_bowerrc', '.bowerrc');
+      this.template('Vagrantfile', 'Vagrantfile');
+      this.template('README.md', 'README.md');
+      this.template('_build.xml', 'build.xml');
+      this.template('_Gulpfile.js', 'Gulpfile.js');
+    },
   },
 
   changeParameters: function() {
+    fs.remove('./app/config/parameters.yml');
     var config = yaml.safeLoad(fs.readFileSync('app/config/parameters.yml.dist'));
 
+    config['parameters']['database_name'] = 'symfony';
+    config['parameters']['database_user'] = 'root';
+    config['parameters']['database_password'] = 'root';
     config['parameters']['admin_path'] = '/admin';
-    config['parameters']['theme'] = 'front';
+    config['parameters']['theme'] = 'default';
     config['parameters']['lib_dir'] = 'lib';
 
     if (this.bundles['bundlesCustom'].indexOf('sonata-admin') !== -1) {
@@ -282,87 +292,6 @@ module.exports = yeoman.Base.extend({
         fs.remove('./ChuckCSS-master/');
         done();
     });
-  },
-
-
-  updateConfig: function () {
-    var config = yaml.safeLoad(fs.readFileSync('app/config/config.yml'));
-
-    config['stof_doctrine_extensions'] = {
-      'default_locale': 'fr_FR',
-      'orm': {
-        'default': {
-          'timestampable': true
-        }
-      }
-    };
-
-    config['framework']['session'] = {
-      'name': "ALPIXEL_SESSID",
-      'handler_id': null,
-    };
-
-
-    if (this.isMultilingual) {
-      config['framework']['translator'] = {
-        'fallback': ["%default_locale%"],
-      };
-
-      config['jms_translation'] = {
-        'locales': '%enabled_locales%',
-        'source-language': '%default_locale%',
-        'configs': {
-          'app': {
-            'dirs': ['%kernel.root_dir%', '%kernel.root_dir%/../src'],
-            'output_dir': '%kernel.root_dir%/Resources/translations',
-            'ignored_domains': ['SonataAdminBundle'],
-            'excluded_names': ["*TestCase.php", "*Test.php", "*Admin.php"],
-            'excluded_dirs': ["cache", "data", "logs"],
-            'extractors': ['jms_i18n_routing']
-          }
-        }
-      }
-
-      config['jms_i18n_routing'] = {
-        'default_locale': '%default_locale%',
-        'locales': '%enabled_locales%',
-        'strategy': 'prefix',
-      };
-
-      config['lunetics_locale'] = {
-        'allowed_locales': '%enabled_locales%',
-        'guessing_order': ['query', 'router', 'session', 'browser'],
-      };
-    }
-
-
-    if (this.bundles['bundlesCustom'].indexOf('alpixel/cmsbundle:@dev') !== -1) {
-      fs.writeFileSync('app/config/cms.yml', yaml.dump({
-        'cms': {
-          'content_types': {}
-        }
-      }, {indent: 4}));
-      config['imports'].push({'resource': 'cms.yml'});
-    }
-
-    if (this.bundles['bundlesCustom'].indexOf('alpixel/userbundle:dev-feature/v2') !== -1) {
-      config['fos_user'] = {
-        'db_driver': 'orm',
-        'firewall_name': 'main',
-        'user_class': 'AppBundle\\Entity\\User'
-      };
-
-      fs.writeFileSync('app/config/security.yml', yaml.dump({
-        'imports': [{
-          'resource': '@AlpixelUserBundle/Resources/config/security.yml'
-        }]
-      }, {indent: 4}));
-    }
-
-    config['twig']['paths'] = ["%kernel.root_dir%/Resources/themes/default/views/"];
-
-    var newConf = yaml.dump(config, {indent: 4});
-    fs.writeFileSync('app/config/config.yml', newConf);
   },
 
   updateAppKernel: function () {
@@ -437,7 +366,7 @@ module.exports = yeoman.Base.extend({
         ]);
       } else if (this.bundles['bundlesCustom'][i] == 'alpixel/seobundle') {
         bundles = bundles.concat([
-          'alpixel/seobundle', 'sonata-project/seo-bundle'
+          'alpixel/seobundle:@dev', 'sonata-project/seo-bundle'
         ]);
       } else {
         bundles = bundles.concat([this.bundles['bundlesCustom'][i]]);
@@ -471,6 +400,31 @@ module.exports = yeoman.Base.extend({
   },
 
   install: {
+    updateConfig: function () {
+
+      if (this.bundles['bundlesCustom'].indexOf('alpixel/cmsbundle:@dev') !== -1) {
+        fs.writeFileSync('app/config/cms.yml', yaml.dump({
+          'cms': {
+            'content_types': {}
+          }
+        }, {indent: 4}));
+      }
+
+      fs.writeFileSync('app/config/security.yml', yaml.dump({
+        'imports': [{
+          'resource': '@AlpixelUserBundle/Resources/config/security.yml'
+        }]
+      }, {indent: 4}));
+
+      var config = yaml.safeLoad(fs.readFileSync('app/config/config.yml'));
+
+      var yoConfig = yaml.safeLoad(fs.readFileSync('new_config.yml'));
+      var newConfig = merge.recursive(config, yoConfig);
+
+      var newConf = yaml.dump(newConfig, {indent: 4});
+      fs.remove('new_config.yml');
+      fs.writeFile('app/config/config.yml', newConf);
+    },
     installComponents: function () {
       fs.copySync(this.templatePath('src'), this.destinationPath('src'));
     //   this.installDependencies({
@@ -484,7 +438,7 @@ module.exports = yeoman.Base.extend({
       var appKernelPath = './composer.json';
       var appKernelContents = htmlWiring.readFileAsString('./composer.json');
       var newAppKernelContents = appKernelContents.replace('\"relative\"', '\"symlink\"');
-      var newAppKernelContents = appKernelContents.replace('\"5\.3\.9\"', '\"5.5\"');
+      newAppKernelContents = appKernelContents.replace('\"5\.3\.9\"', '\"5.5\"');
       fs.writeFileSync(appKernelPath, newAppKernelContents);
       this.spawnCommand('composer', ['update', '--ignore-platform-reqs']);
     }

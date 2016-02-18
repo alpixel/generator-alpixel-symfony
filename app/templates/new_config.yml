@@ -1,0 +1,74 @@
+framework:
+  session:
+    name: "ALPIXEL_SESSID"
+    handler_id: ~
+<% if (isMultilingual) { %> 
+  translator:
+    fallback: ["%default_locale%"]
+<% } %>
+
+
+stof_doctrine_extensions:
+  default_locale: 'fr_FR'
+  orm:
+    default:
+      timestampable: true
+
+<% if (bundles['bundlesCustom'].indexOf('alpixel/seobundle') !== -1) { %> 
+sonata_seo:
+  page:
+    title: "ALPIXEL - Symfony"
+    metas:
+      name:
+        description: ""
+
+seo:
+  sitemap_base_url: "http://www.changeme.fr"
+<% } %>
+
+<% if (bundles['bundlesCustom'].indexOf('alpixel/mediabundle') !== -1) { %>
+media:
+  upload_folder: "%kernel.root_dir%/../web/upload/"
+  allowed_mimetypes: ['image/*', 'application/pdf']
+<% } %>
+
+<% if (isMultilingual) { %>
+jms_translation:
+  locales: '%enabled_locales%'
+  source-language: '%default_locale%'
+  configs:
+    app:
+      dirs: ['%kernel.root_dir%', '%kernel.root_dir%/../src']
+      output_dir: '%kernel.root_dir%/Resources/translations'
+      ignored_domains: ['SonataAdminBundle']
+      excluded_names: ["*TestCase.php", "*Test.php", "*Admin.php"]
+      excluded_dirs: ["cache", "data", "logs"]
+      extractors: ['jms_i18n_routing']
+
+jms_i18n_routing:
+  default_locale: '%default_locale%'
+  locales: '%enabled_locales%'
+  strategy: 'prefix'
+
+lunetics_locale:
+  allowed_locales: '%enabled_locales%'
+  guessing_order: ['query', 'router', 'session', 'browser']
+<% } %>
+
+<% if (bundles['bundlesCustom'].indexOf('alpixel/cmsbundle:@dev') !== -1) { %>
+imports:
+  - { resource: 'parameters.yml' }
+  - { resource: 'security.yml' }
+  - { resource: 'services.yml' }
+  - { resource: 'cms.yml' }
+<% } %>
+
+<% if (bundles['bundlesCustom'].indexOf('alpixel/userbundle:dev-feature/v2') !== -1) { %>
+fos_user:
+  db_driver: 'orm'
+  firewall_name: 'main'
+  user_class: 'AppBundle\Entity\User'
+<% } %>
+
+twig:
+  paths: ["%kernel.root_dir%/Resources/themes/%theme%/views/"]

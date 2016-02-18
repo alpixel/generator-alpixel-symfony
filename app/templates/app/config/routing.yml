@@ -1,0 +1,22 @@
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation
+
+<% if (bundles['bundlesCustom'].indexOf('alpixel/cmsbundle:@dev') !== -1) { %>
+admin_user_login:
+    resource: '@AlpixelUserBundle/Resources/config/routing.yml'
+    options: { i18n: false }
+<% } %>
+
+<% if (bundles['bundlesCustom'].indexOf('sonata-admin') !== -1) { %>
+sonata_admin_home:
+    resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
+    prefix: %admin_path%
+    options: { i18n: false }
+
+sonata_admin_base:
+    resource: .
+    type: sonata_admin
+    prefix: %admin_path%
+    options: { i18n: false }
+<% } %>
