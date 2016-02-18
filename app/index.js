@@ -116,12 +116,12 @@ module.exports = yeoman.Base.extend({
           },
           {
             name: 'AlpixelCMSBundle',
-            value: 'alpixel/cmsbundle',
+            value: 'alpixel/cmsbundle:@dev',
             checked: true
           },
           {
             name: 'AlpixelMenuBundle',
-            value: 'alpixel/menu-bundle:@dev', 
+            value: 'alpixel/menu-bundle:@dev',
             checked: true
           },
           {
@@ -244,11 +244,6 @@ module.exports = yeoman.Base.extend({
       this.destinationPath('.gitignore')
     );
 
-    this.fs.copy(
-      this.templatePath('src'),
-      this.destinationPath('src')
-    );
-
     this.template('_bower.json', 'bower.json');
     this.template('_package.json', 'package.json');
     this.template('_editorconfig', '.editorconfig');
@@ -262,19 +257,19 @@ module.exports = yeoman.Base.extend({
   changeParameters: function() {
     var config = yaml.safeLoad(fs.readFileSync('app/config/parameters.yml.dist'));
 
-    config['admin_path'] = '~';
-    config['theme'] = 'front';
-    config['lib_dir'] = 'lib';
+    config['parameters']['admin_path'] = '/admin';
+    config['parameters']['theme'] = 'front';
+    config['parameters']['lib_dir'] = 'lib';
 
     if (this.bundles['bundlesCustom'].indexOf('sonata-admin') !== -1) {
-      config['elastic_index'] = '~';
-      config['elastic_host'] = '~';
-      config['elastic_port'] = '~';
+      config['parameters']['elastic_index'] = null;
+      config['parameters']['elastic_host'] = null;
+      config['parameters']['elastic_port'] = null;
     }
 
-    config['default_locale'] = 'fr';  
+    config['parameters']['default_locale'] = 'fr';
     if (this.isMultilingual) {
-      config['enabled_locales'] = ['fr'];
+      config['parameters']['enabled_locales'] = ['fr'];
     }
 
     var newConf = yaml.dump(config, {indent: 4});
@@ -301,6 +296,68 @@ module.exports = yeoman.Base.extend({
         }
       }
     };
+
+    config['framework']['session'] = {
+      'name': "ALPIXEL_SESSID",
+      'handler_id': null,
+    };
+
+
+    if (this.isMultilingual) {
+      config['framework']['translator'] = {
+        'fallback': ["%default_locale%"],
+      };
+
+      config['jms_translation'] = {
+        'locales': '%enabled_locales%',
+        'source-language': '%default_locale%',
+        'configs': {
+          'app': {
+            'dirs': ['%kernel.root_dir%', '%kernel.root_dir%/../src'],
+            'output_dir': '%kernel.root_dir%/Resources/translations',
+            'ignored_domains': ['SonataAdminBundle'],
+            'excluded_names': ["*TestCase.php", "*Test.php", "*Admin.php"],
+            'excluded_dirs': ["cache", "data", "logs"],
+            'extractors': ['jms_i18n_routing']
+          }
+        }
+      }
+
+      config['jms_i18n_routing'] = {
+        'default_locale': '%default_locale%',
+        'locales': '%enabled_locales%',
+        'strategy': 'prefix',
+      };
+
+      config['lunetics_locale'] = {
+        'allowed_locales': '%enabled_locales%',
+        'guessing_order': ['query', 'router', 'session', 'browser'],
+      };
+    }
+
+
+    if (this.bundles['bundlesCustom'].indexOf('alpixel/cmsbundle:@dev') !== -1) {
+      fs.writeFileSync('app/config/cms.yml', yaml.dump({
+        'cms': {
+          'content_types': {}
+        }
+      }, {indent: 4}));
+      config['imports'].push({'resource': 'cms.yml'});
+    }
+
+    if (this.bundles['bundlesCustom'].indexOf('alpixel/userbundle:dev-feature/v2') !== -1) {
+      config['fos_user'] = {
+        'db_driver': 'orm',
+        'firewall_name': 'main',
+        'user_class': 'AppBundle\\Entity\\User'
+      };
+
+      fs.writeFileSync('app/config/security.yml', yaml.dump({
+        'imports': [{
+          'resource': '@AlpixelUserBundle/Resources/config/security.yml'
+        }]
+      }, {indent: 4}));
+    }
 
     config['twig']['paths'] = ["%kernel.root_dir%/Resources/themes/default/views/"];
 
@@ -337,11 +394,12 @@ module.exports = yeoman.Base.extend({
     }
 
     customBundles += "            //Alpixel" + "\n";
-    if (this.bundles['bundlesCustom'].indexOf('alpixel/userbundle') !== -1) {
-      customBundles += "            new Alpixel\\Bundle\\UserBundle\\UserBundle()," + "\n";
+    if (this.bundles['bundlesCustom'].indexOf('alpixel/userbundle:dev-feature/v2') !== -1) {
+      customBundles += "            new Alpixel\\Bundle\\UserBundle\\AlpixelUserBundle()," + "\n";
     }
 
-    if (this.bundles['bundlesCustom'].indexOf('alpixel/cmsbundle') !== -1) {
+    if (this.bundles['bundlesCustom'].indexOf('alpixel/cmsbundle:@dev') !== -1) {
+      customBundles += "            new FOS\\UserBundle\\FOSUserBundle()," + "\n";
       customBundles += "            new Alpixel\\Bundle\\CMSBundle\\CMSBundle()," + "\n";
     }
 
@@ -349,11 +407,13 @@ module.exports = yeoman.Base.extend({
       customBundles += "            new Alpixel\\Bundle\\CronBundle\\CronBundle()," + "\n";
     }
 
-    if (this.bundles['bundlesCustom'].indexOf('alpixel/menu-bundle') !== -1) {
+    if (this.bundles['bundlesCustom'].indexOf('alpixel/menu-bundle:@dev') !== -1) {
+      customBundles += "            new Knp\\Bundle\\MenuBundle\\KnpMenuBundle()," + "\n";
       customBundles += "            new Alpixel\\Bundle\\MenuBundle\\AlpixelMenuBundle()," + "\n";
     }
 
     if (this.bundles['bundlesCustom'].indexOf('alpixel/seobundle') !== -1) {
+      customBundles += "            new Sonata\\SeoBundle\\SonataSeoBundle()," + "\n";
       customBundles += "            new Alpixel\\Bundle\\SEOBundle\\SEOBundle()," + "\n";
     }
 
@@ -374,6 +434,10 @@ module.exports = yeoman.Base.extend({
         bundles = bundles.concat([
           'sonata-project/block-bundle:@dev', 'sonata-project/admin-bundle:@dev',
           'sonata-project/doctrine-orm-admin-bundle:@dev', 'sonata-project/core-bundle:@dev'
+        ]);
+      } else if (this.bundles['bundlesCustom'][i] == 'alpixel/seobundle') {
+        bundles = bundles.concat([
+          'alpixel/seobundle', 'sonata-project/seo-bundle'
         ]);
       } else {
         bundles = bundles.concat([this.bundles['bundlesCustom'][i]]);
@@ -407,19 +471,20 @@ module.exports = yeoman.Base.extend({
   },
 
   install: {
-    // installComponents: function () {
-    //   fs.copySync(this.templatePath('src'), this.destinationPath('src'));
+    installComponents: function () {
+      fs.copySync(this.templatePath('src'), this.destinationPath('src'));
     //   this.installDependencies({
     //     npm: true,
     //     bower: true,
     //     skipInstall: false
     //   });
     //   // this.spawnCommand('bower', ['install', '--config.interactive=false']);
-    // },
+    },
     installBundle: function() {
       var appKernelPath = './composer.json';
       var appKernelContents = htmlWiring.readFileAsString('./composer.json');
       var newAppKernelContents = appKernelContents.replace('\"relative\"', '\"symlink\"');
+      var newAppKernelContents = appKernelContents.replace('\"5\.3\.9\"', '\"5.5\"');
       fs.writeFileSync(appKernelPath, newAppKernelContents);
       this.spawnCommand('composer', ['update', '--ignore-platform-reqs']);
     }
