@@ -1,0 +1,28 @@
+imports:
+    - { resource: config.yml }
+
+monolog:
+    handlers:
+        main:
+            type:               fingers_crossed
+            action_level:       error
+            handler:            grouped
+        grouped:
+            type:               group
+            members:            [streamed, swift]
+            members:            [streamed]
+        streamed:
+            type:               stream
+            path:               "%kernel.logs_dir%/%kernel.environment%.log"
+            level:              debug
+        swift:
+            type:               swift_mailer
+            from_email:         sysadmin@alpixel.fr
+            to_email:           sysadmin@alpixel.fr
+            subject:            "[%url_production%] Erreur"
+            level:              critical
+        login:
+            type:               stream
+            path:               "%kernel.logs_dir%/auth.log"
+            level:              info
+            channels:           security

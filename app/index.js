@@ -249,10 +249,14 @@ module.exports = yeoman.Base.extend({
 
       if (this.bundles['bundlesCustom'].indexOf('sonata-project') !== -1) {
         this.template('app/config/admin.yml', 'app/config/admin.yml');
+      } else {
+        fs.remove('./app/config/admin.yml')
       }
 
       if (this.bundles['bundlesCustom'].indexOf('friendsofsymfony/elastica-bundle') !== -1) {
         this.template('app/config/elastica.yml', 'app/config/elastica.yml');
+      } else {
+        fs.remove('./app/config/elastica.yml')
       }
 
       this.template('app/config/routing.yml', 'app/config/routing.yml');

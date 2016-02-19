@@ -7,6 +7,20 @@ framework:
     fallback: ["%default_locale%"]
 <% } %>
 
+doctrine:
+    dbal:
+        connections:
+            default:
+                driver:   pdo_mysql
+                host:     "%database_host%"
+                unix_socket: ~
+                port:     "%database_port%"
+                dbname:   "%database_name%"
+                user:     "%database_user%"
+                password: "%database_password%"
+                charset:  utf8mb4
+            default_table_options:
+                charset: utf8mb4
 
 stof_doctrine_extensions:
   default_locale: 'fr_FR'
@@ -14,6 +28,7 @@ stof_doctrine_extensions:
     default:
       timestampable: true
       sluggable: true
+      sortable: true
 
 <% if (bundles['bundlesCustom'].indexOf('alpixel/seobundle') !== -1) { %>
 sonata_seo:
