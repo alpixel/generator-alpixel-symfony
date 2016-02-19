@@ -2,10 +2,15 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
 
-<% if (bundles['bundlesCustom'].indexOf('alpixel/cmsbundle:@dev') !== -1) { %>
+<% if (bundles['bundlesCustom'].indexOf('alpixel/userbundle') !== -1) { %>
 admin_user_login:
     resource: '@AlpixelUserBundle/Resources/config/routing.yml'
     options: { i18n: false }
+<% } %>
+
+<% if (bundles['bundlesCustom'].indexOf('alpixel/cmsbundle:@dev') !== -1) { %>
+cms_page:
+    resource: '@CMSBundle/Resources/config/routing.yml'
 <% } %>
 
 <% if (bundles['bundlesCustom'].indexOf('sonata-project') !== -1) { %>

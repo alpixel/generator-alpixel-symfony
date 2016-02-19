@@ -1,6 +1,6 @@
 
 {
-  "name": "<%= appname %>",
+  "name": "alpixel-symfony",
   "version": "1.0.0",
   "author": "ALPIXEL <dev@alpixel.fr>",
   "private": true,

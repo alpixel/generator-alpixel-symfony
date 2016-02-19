@@ -1,4 +1,4 @@
-{%- if bodyClass is not defined -%}
+{% spaceless %}{%- if bodyClass is not defined -%}
     {%- set bodyClass = 'homepage' -%}
 {% endif -%}
 <!DOCTYPE html>
@@ -77,3 +77,4 @@
         {% endblock %}
     </body>
 </html>
+{% endspaceless %}
