@@ -1,0 +1,13 @@
+{% block user_block %}
+    <li class="user-header bg-light-blue">
+        <img src="/bundles/alpixeluser/img/default_avatar.png" class="img-circle" alt="Avatar">
+        <p>{{ app.user }}</p>
+    </li>
+
+
+    <li class="user-footer">
+        <div class="pull-right">
+            <a href="{{ url('admin_logout') }}" class="btn btn-default btn-flat"><i class="fa fa-sign-out fa-fw"></i> Déconnexion</a>
+        </div>
+    </li>
+{% endblock %}

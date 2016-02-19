@@ -233,6 +233,7 @@ module.exports = yeoman.Base.extend({
     copyFiles: function() {
       fs.remove('./Symfony/');
       fs.remove('./vendor/');
+      fs.remove('./UPGRADE*');
       fs.remove('./app/Resources/views');
       fs.remove(this.destinationPath('./src'));
       fs.remove('./README.md');
@@ -245,6 +246,14 @@ module.exports = yeoman.Base.extend({
         this.templatePath('_gitignore'),
         this.destinationPath('.gitignore')
       );
+
+      if (this.bundles['bundlesCustom'].indexOf('sonata-project') !== -1) {
+        this.template('app/config/admin.yml', 'app/config/admin.yml');
+      }
+
+      if (this.bundles['bundlesCustom'].indexOf('friendsofsymfony/elastica-bundle') !== -1) {
+        this.template('app/config/elastica.yml', 'app/config/elastica.yml');
+      }
 
       this.template('app/config/routing.yml', 'app/config/routing.yml');
       this.template('new_config.yml', 'new_config.yml');
@@ -270,8 +279,9 @@ module.exports = yeoman.Base.extend({
     config['parameters']['admin_path'] = '/admin';
     config['parameters']['theme'] = 'default';
     config['parameters']['lib_dir'] = 'lib';
+    config['parameters']['url_production'] = "http://"+this.appname;
 
-    if (this.bundles['bundlesCustom'].indexOf('sonata-admin') !== -1) {
+    if (this.bundles['bundlesCustom'].indexOf('friendsofsymfony/elastica-bundle') !== -1) {
       config['parameters']['elastic_index'] = null;
       config['parameters']['elastic_host'] = null;
       config['parameters']['elastic_port'] = null;
@@ -304,7 +314,7 @@ module.exports = yeoman.Base.extend({
     var customBundles = "";
     customBundles += "\n";
 
-    if (this.bundles['bundlesCustom'].indexOf('sonata-admin') !== -1) {
+    if (this.bundles['bundlesCustom'].indexOf('sonata-project') !== -1) {
       customBundles += "            // Admin" + "\n";
       customBundles += "            new Sonata\\CoreBundle\\SonataCoreBundle()," + "\n";
       customBundles += "            new Sonata\\DoctrineORMAdminBundle\\SonataDoctrineORMAdminBundle()," + "\n";
@@ -344,6 +354,10 @@ module.exports = yeoman.Base.extend({
     if (this.bundles['bundlesCustom'].indexOf('alpixel/seobundle') !== -1) {
       customBundles += "            new Sonata\\SeoBundle\\SonataSeoBundle()," + "\n";
       customBundles += "            new Alpixel\\Bundle\\SEOBundle\\SEOBundle()," + "\n";
+    }
+
+    if (this.bundles['bundlesCustom'].indexOf('friendsofsymfony/elastica-bundle') !== -1) {
+      customBundles += "            new FOS\\ElasticaBundle\\FOSElasticaBundle()," + "\n";
     }
 
     customBundles += "\n";
@@ -427,12 +441,11 @@ module.exports = yeoman.Base.extend({
     },
     installComponents: function () {
       fs.copySync(this.templatePath('src'), this.destinationPath('src'));
-    //   this.installDependencies({
-    //     npm: true,
-    //     bower: true,
-    //     skipInstall: false
-    //   });
-    //   // this.spawnCommand('bower', ['install', '--config.interactive=false']);
+      this.installDependencies({
+        npm: true,
+        bower: true,
+        skipInstall: false
+      });
     },
     installBundle: function() {
       var appKernelPath = './composer.json';
@@ -443,7 +456,11 @@ module.exports = yeoman.Base.extend({
       this.spawnCommand('composer', ['update', '--ignore-platform-reqs']);
     }
   },
-  end: {
-    // console.log(' 👍 Installation terminée ! Ne pas oublier d\'optimiser le app.php en décommentant les lignes appropriées');
+  end: function() {
+    console.log(' 👍 Installation terminée !');
+    console.log(' Pour finaliser l\'installation sur un vagrant :  !');
+    console.log(' php app/console doctrine:database:create');
+    console.log(' php app/console doctrine:schema:update --force');
+    console.log(' php app/console doctrine:fixtures:load');
   }
 });

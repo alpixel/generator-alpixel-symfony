@@ -1,0 +1,61 @@
+fos_elastica:
+    clients:
+        default:
+            servers:
+                - { host: %elastic_host%, port: %elastic_port% }
+    indexes:
+        default:
+            client: default
+            use_alias: true
+            index_name: "%elastic_index%"
+            settings:
+                index:
+                    analysis:
+                        analyzer:
+                            custom_simple_analyzer :
+                                type     :    custom
+                                tokenizer:    standard
+                            custom_short_analyzer :
+                                type     :    custom
+                                tokenizer:    standard
+                                filter   :    [lowercase, asciifolding, worddelimiter]
+                            custom_short_search_analyzer :
+                                type     :    custom
+                                tokenizer:    standard
+                                filter   :    [lowercase, asciifolding, worddelimiter]
+                            custom_analyzer :
+                                type     :    custom
+                                tokenizer:    nGram
+                                filter   :    [stopwords, asciifolding, lowercase, snowball, elision, worddelimiter]
+                            custom_search_analyzer :
+                                type     :    custom
+                                tokenizer:    standard
+                                filter   :    [stopwords, asciifolding, lowercase, snowball, elision, worddelimiter]
+                            custom_phone_analyzer:
+                                tokenizer: standard
+                                char_filter: [phone_pattern]
+                            custom_email_analyzer:
+                                tokenizer: uax_url_email
+                        tokenizer:
+                            nGram:
+                                type:     nGram
+                                min_gram: 2
+                                max_gram: 20
+                        char_filter :
+                            phone_pattern:
+                                type: pattern_replace
+                                pattern: ([^0-9]+)
+                                replacement:
+                        filter:
+                              snowball:
+                                    type:     snowball
+                                    language: French
+                              elision:
+                                    type:     elision
+                                    articles: [l, m, t, qu, n, s, j, d]
+                              stopwords:
+                                    type:      stop
+                                    stopwords: [_french_]
+                                    ignore_case : true
+                              worddelimiter :
+                                    type:      word_delimiter

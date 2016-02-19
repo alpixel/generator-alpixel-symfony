@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
         host_ram = `grep ^MemTotal /proc/meminfo 2>/dev/null | awk '{print $2 / 1024}'`.to_i
         host_cpus = `grep ^processor /proc/cpuinfo 2>/dev/null | wc -l`.to_i
       end
-    
+
       config.vm.provider "virtualbox" do |vb|
         if host_ram > 0 && host_cpus > 0
           vb.customize ["modifyvm", :id, "--cpus", host_cpus / 2, "--memory", host_ram / 3, "--ioapic", "on"]
@@ -21,6 +21,8 @@ Vagrant.configure("2") do |config|
         end
       end
 
+    config.ssh.username = "vagrant"
+    config.ssh.password = "vagrant"
     config.vm.box = "ALPIXEL/symfony"
     config.vm.network "private_network", ip: "192.168.33.10"
     config.vm.hostname = "<%= appname %>.local"

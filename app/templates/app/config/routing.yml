@@ -8,7 +8,7 @@ admin_user_login:
     options: { i18n: false }
 <% } %>
 
-<% if (bundles['bundlesCustom'].indexOf('sonata-admin') !== -1) { %>
+<% if (bundles['bundlesCustom'].indexOf('sonata-project') !== -1) { %>
 sonata_admin_home:
     resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
     prefix: %admin_path%

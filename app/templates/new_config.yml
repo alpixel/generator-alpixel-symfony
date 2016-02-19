@@ -2,7 +2,7 @@ framework:
   session:
     name: "ALPIXEL_SESSID"
     handler_id: ~
-<% if (isMultilingual) { %> 
+<% if (isMultilingual) { %>
   translator:
     fallback: ["%default_locale%"]
 <% } %>
@@ -14,7 +14,7 @@ stof_doctrine_extensions:
     default:
       timestampable: true
 
-<% if (bundles['bundlesCustom'].indexOf('alpixel/seobundle') !== -1) { %> 
+<% if (bundles['bundlesCustom'].indexOf('alpixel/seobundle') !== -1) { %>
 sonata_seo:
   page:
     title: "ALPIXEL - Symfony"
@@ -55,12 +55,16 @@ lunetics_locale:
   guessing_order: ['query', 'router', 'session', 'browser']
 <% } %>
 
-<% if (bundles['bundlesCustom'].indexOf('alpixel/cmsbundle:@dev') !== -1) { %>
 imports:
   - { resource: 'parameters.yml' }
   - { resource: 'security.yml' }
   - { resource: 'services.yml' }
+<% if (bundles['bundlesCustom'].indexOf('alpixel/cmsbundle:@dev') !== -1) { %>
   - { resource: 'cms.yml' }
+<% } %><% if (bundles['bundlesCustom'].indexOf('friendsofsymfony/elastica-bundle') !== -1) { %>
+  - { resource: 'elastica.yml' }
+<% } %><% if (bundles['bundlesCustom'].indexOf('sonata-project') !== -1) { %>
+  - { resource: 'admin.yml' }
 <% } %>
 
 <% if (bundles['bundlesCustom'].indexOf('alpixel/userbundle:dev-feature/v2') !== -1) { %>
@@ -71,4 +75,11 @@ fos_user:
 <% } %>
 
 twig:
-  paths: ["%kernel.root_dir%/Resources/themes/%theme%/views/"]
+  globals:
+      base_url: "%url_production%"
+  paths:
+    - "%kernel.root_dir%/Resources/themes/%theme%/views/"
+<% if (bundles['bundlesCustom'].indexOf('sonata-project') !== -1) { %>
+    - "%kernel.root_dir%/Resources/themes/admin/views/"
+<% } %>
+

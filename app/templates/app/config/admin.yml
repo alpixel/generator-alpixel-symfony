@@ -1,0 +1,36 @@
+sonata_admin:
+    title: Administration
+    templates:
+        user_block: block/user_block.html.twig
+    security:
+        handler: sonata.admin.security.handler.role
+        information:
+            EDIT: EDIT
+            LIST: LIST
+            CREATE: CREATE
+            VIEW: VIEW
+            DELETE: DELETE
+            EXPORT: EXPORT
+            OPERATOR: OPERATOR
+            MASTER: MASTER
+        admin_permissions: [CREATE, LIST, DELETE, UNDELETE, EXPORT, OPERATOR, MASTER]
+        object_permissions: [VIEW, EDIT, DELETE, UNDELETE, OPERATOR, MASTER, OWNER]
+    dashboard:
+        blocks:
+            - { position: none, type: sonata.admin.block.admin_list  }
+
+sonata_block:
+    default_contexts: [sonata_page_bundle]
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts: [admin]
+        sonata.user.block.menu:
+            contexts: [admin]
+        sonata.user.block.account:
+            contexts: [admin]
+        sonata.block.service.text:
+            contexts: [admin]
+        sonata.admin.block.search_result:
+            contexts: [admin]
+
+services:
