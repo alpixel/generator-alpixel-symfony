@@ -254,6 +254,7 @@ module.exports = yeoman.Base.extend({
 
       this.template('app/config/routing.yml', 'app/config/routing.yml');
       this.template('new_config.yml', 'new_config.yml');
+      this.template('new_config_dev.yml', 'new_config_dev.yml');
       this.template('app/Resources/themes/default/views/layout/base.html.twig', 'app/Resources/themes/default/views/layout/base.html.twig');
       this.template('_bower.json', 'bower.json');
       this.template('_package.json', 'package.json');
@@ -369,6 +370,13 @@ module.exports = yeoman.Base.extend({
       var newConf = yaml.dump(newConfig, {indent: 4});
       fs.remove('new_config.yml');
       fs.writeFile('app/config/config.yml', newConf);
+
+      //Same for dev
+      var config = htmlWiring.readFileAsString('./app/config/config_dev.yml');
+      var yoConfig = htmlWiring.readFileAsString('new_config_dev.yml');
+
+      var newConfig = config.replace('framework:', yoConfig+'\n\nframework:');
+      fs.writeFile('app/config/config_dev.yml', newConfig);
     },
     installComponents: function () {
       fs.copySync(this.templatePath('src'), this.destinationPath('src'));

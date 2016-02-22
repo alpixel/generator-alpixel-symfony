@@ -19,7 +19,6 @@ var vars = {
   lib_css: [
     './web/lib/font-awesome/css/font-awesome.css',
     './web/lib/ionicons/css/ionicons.css',
-    './web/lib/ChuckCSS/dist/chuckcss.css',
     // './web/lib/bootstrap/dist/css/bootstrap.css',
     // './web/lib/flexslider/flexslider.css',
     // './web/lib/fancybox/source/jquery.fancybox.js',
@@ -31,7 +30,6 @@ var vars = {
     './web/lib/jquery/dist/jquery.js',
     './web/lib/bootstrap/dist/js/bootstrap.js',
     './web/lib/fastclick/lib/fastclick.js',
-    './web/lib/ChuckCSS/dist/chuckcss.js',
     // './web/lib/wow/dist/wow.js',
     // './web/lib/jquery.scrollTo/jquery.scrollTo.js',
     // './web/lib/flexslider/jquery.flexslider.js',
@@ -124,7 +122,7 @@ gulp.task('imagemin', function() {
 });
 
 gulp.task('watch', function() {
-    gulp.watch(path.theme_dir + '/less/front.less', ['app_less']);
+    gulp.watch(path.theme_dir + '/less/**/*.less', ['app_less']);
     gulp.watch(path.theme_dir + '/js/**/*.js', ['app_js']);
 });
 
