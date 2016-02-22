@@ -215,20 +215,6 @@ module.exports = yeoman.Base.extend({
     }
   },
 
-  downloadChuck: function() {
-    var done = this.async();
-    this._unzip('https://github.com/alpixel/ChuckCSS/archive/master.zip', this.destinationRoot(), function (err, remote) {
-      if (err) {
-        console.log(' 💩 ' + chalk.red(' ARRRRR '));
-        console.log(err);
-        return;
-      } else {
-        console.log(' 👍 ' + chalk.green(' Download success ! '));
-        done();
-      }
-    });
-  },
-
   writing: {
     copyFiles: function() {
       fs.remove('./Symfony/');
@@ -305,14 +291,6 @@ module.exports = yeoman.Base.extend({
 
     var newConf = yaml.dump(config, {indent: 4});
     fs.writeFileSync('app/config/parameters.yml.dist', newConf);
-  },
-
-  moveChuck: function () {
-    var done = this.async();
-    fs.copy('./ChuckCSS-master/less/', './app/Resources/themes/default/less', function (err) {
-        fs.remove('./ChuckCSS-master/');
-        done();
-    });
   },
 
   updateAppKernel: function () {

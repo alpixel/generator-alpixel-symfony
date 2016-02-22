@@ -18,13 +18,13 @@
     "font-awesome": "4.*",
     "ionicons": "2.*",
     "backstretch": "2.*",
-    "bootstrap": "3.*",
     "fancybox": "2.*",
     "flexslider": "2.5.*",
     "fastclick": "1.*",
     "html5shiv": "3.*",
     "jquery.scrollTo": "^2.1.2",
-    "wow.js": "1.*"
+    "wow.js": "1.*",
+    "ChuckCSS": "alpixel/ChuckCSS"
   },
   "resolutions": {
     "jquery": "~2.2.0"

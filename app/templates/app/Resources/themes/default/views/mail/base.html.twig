@@ -1,0 +1,117 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<head>
+    <title>Savoie Hexapole</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style type="text/css">
+        body { width: 600 !important; -webkit-text-size-adjust: none; -ms-text-size-adjust: none; }
+    </style>
+</head>
+<body bgcolor="#ffffff" topmargin="0" alink="#000" link="#000" vlink="#000" text="#000" style="width: 600 !important; -webkit-text-size-adjust: none; -ms-= text-size-adjust: none; background: #ffffff; margin: 0; padding: 0;">
+<table width="600" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+    <!-- SPACE -->
+    <tr width="600" height="25" border="0" bgcolor="#ffffff">
+        <td width="600" height="25" align="center" border="0" bgcolor="#ffffff"></td>
+    </tr>
+    <!-- LOGO -->
+    <tr width="600" height="61" border="0" bgcolor="#ffffff">
+        <td width="600" height="61" align="center" border="0" bgcolor="#ffffff">
+            <img src="{{app.request.getSchemeAndHttpHost()}}{{ asset('images/mails/logo-savoie-hexapole-w.png') }}" alt="Savoie Hexapole" width="168" height="61" border="0" style="display: block;" />
+        </td>
+    </tr>
+    <!-- SPACE -->
+    <tr width="600" height="25" border="0" bgcolor="#ffffff">
+        <td width="600" height="25" align="center" border="0" bgcolor="#ffffff"></td>
+    </tr>
+    <!-- HEADER -->
+    <tr width="600" border="0" bgcolor="#738e94">
+        <td width="600" align="left" border="0" bgcolor="#738e94">
+            <table width="600" cellpadding="0" cellspacing="0" bgcolor="#738e94" style="border: 1px solid #738e94;">
+                <tr width="600" border="0" bgcolor="#738e94">
+                    <td width="25" align="left" border="0" bgcolor="#738e94">
+                        <img src="{{app.request.getSchemeAndHttpHost()}}{{ asset('images/mails/spacer.gif') }}" width="25" height="1" border="0" bgcolor="#738e94" style="display:block;" />
+                    </td>
+                    <td width="550" align="left" border="0" bgcolor="#738e94">
+                        <table width="550" cellpadding="0" cellspacing="0" border="0" bgcolor="#738e94">
+                            <tr width="550" height="10" border="0" bgcolor="#738e94">
+                                <td width="550" height="10" border="0" align="left" bgcolor="#738e94"></td>
+                            </tr>
+                            <tr width="550" border="0" bgcolor="#738e94">
+                                <td width="550" border="0" align="left" bgcolor="#738e94" color="#ffffff" style="color: #ffffff;">
+                                    {% block header %}{% endblock %}
+                                </td>
+                            </tr>
+                            <tr width="550" height="10" border="0" bgcolor="#738e94">
+                                <td width="550" height="10" border="0" align="left" bgcolor="#738e94"></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td width="25" align="left" border="0" bgcolor="#738e94">
+                        <img src="{{app.request.getSchemeAndHttpHost()}}{{ asset('images/mails/spacer.gif') }}" width="25" height="1" border="0" bgcolor="#738e94" style="display:block;" />
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <!-- SPACE -->
+    <tr width="600" height="25" border="0" bgcolor="#ffffff">
+        <td width="600" height="25" align="center" border="0" bgcolor="#ffffff"></td>
+    </tr>
+    <!-- BODY -->
+    <tr width="600" height="25" border="0" bgcolor="#ffffff">
+        <td width="600" align="left" border="0" bgcolor="#ffffff">
+            <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff">
+                <tr width="600" border="0" bgcolor="#ffffff">
+                    <td width="25" align="left" border="0" bgcolor="#ffffff">
+                        <img src="{{app.request.getSchemeAndHttpHost()}}{{ asset('images/mails/spacer.gif') }}" width="25" height="1" border="0" bgcolor="#ffffff" style="display:block;" />
+                    </td>
+                    <td width="550" align="left" border="0" bgcolor="#ffffff">
+                        {% block body %}{% endblock %}
+                    </td>
+                    <td width="25" align="left" border="0" bgcolor="#ffffff">
+                        <img src="{{app.request.getSchemeAndHttpHost()}}{{ asset('images/mails/spacer.gif') }}" width="25" height="1" border="0" bgcolor="#ffffff" style="display:block;" />
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <!-- SPACE -->
+    <tr width="600" height="25" border="0" bgcolor="#ffffff">
+        <td width="600" height="25" align="center" border="0" bgcolor="#ffffff"></td>
+    </tr>
+    <!-- FOOTER -->
+
+    <tr width="600" height="25" border="0" bgcolor="#ffffff">
+        <td width="600" align="left" border="0" bgcolor="#ffffff">
+            <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff">
+                <tr width="600" border="0" bgcolor="#ffffff">
+                    <td width="25" align="left" border="0" bgcolor="#ffffff">
+                        <img src="{{app.request.getSchemeAndHttpHost()}}{{ asset('images/mails/spacer.gif') }}" width="25" height="1" border="0" bgcolor="#ffffff" style="display:block;" />
+                    </td>
+                    <td width="550" align="left" border="0" bgcolor="#ffffff">
+                        {% block footer %}
+                            À bientôt sur le site de Savoie Hexapôle.
+                        {% endblock %}
+                    </td>
+                    <td width="25" align="left" border="0" bgcolor="#ffffff">
+                        <img src="{{app.request.getSchemeAndHttpHost()}}{{ asset('images/mails/spacer.gif') }}" width="25" height="1" border="0" bgcolor="#ffffff" style="display:block;" />
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <!-- SPACE + BORDER -->
+    <tr width="600" height="25" border="0" bgcolor="#ffffff">
+        <td width="600" height="25" align="center" border="0" bgcolor="#ffffff" style="border-top: 1px solid #d3d3d3;"></td>
+    </tr>
+    <!-- INFO -->
+    <tr width="600" border="0" bgcolor="#ffffff">
+        <td width="600" align="center" bgcolor="#ffffff">
+            <font face="Arial, Helvetica, sans-serif" size="2" color="#666" style="font-size:12px;">
+                <span style="color:#738e94;">SAVOIE HEXAPOLE<br /><a href="http://www.savoie-hexapole.fr" style="color:#738e94;">www.savoie-hexapole.fr</a>
+            </font>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
