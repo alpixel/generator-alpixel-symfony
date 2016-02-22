@@ -15,7 +15,7 @@
     "gulp-concat": "^2.6.0",
     "gulp-uglify": "^1.2.0",
     "gulp-less": "^3.0.3",
-    "gulp-rewrite-css": "^0.0.8"
+    "gulp-rewrite-css": "^0.0.8",
     "gulp-imagemin": "^2.4.0",
     "gulp-cssnano": "^2.1.1",
     "gulp-util": "^3.0.6",

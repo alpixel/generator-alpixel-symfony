@@ -1,5 +1,6 @@
 sonata_admin:
     title: Administration
+    title_logo: /img/favicons/favicon.ico
     templates:
         user_block: block/user_block.html.twig
     security:
