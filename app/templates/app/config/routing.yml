@@ -8,7 +8,7 @@ admin_user_login:
     options: { i18n: false }
 <% } %>
 
-<% if (bundles['bundlesCustom'].indexOf('alpixel/cmsbundle:@dev') !== -1) { %>
+<% if (bundles['bundlesCustom'].indexOf('alpixel/cmsbundle') !== -1) { %>
 cms_page:
     resource: '@CMSBundle/Resources/config/routing.yml'
 <% } %>

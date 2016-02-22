@@ -2,10 +2,8 @@ framework:
   session:
     name: "ALPIXEL_SESSID"
     handler_id: ~
-<% if (isMultilingual) { %>
   translator:
     fallback: ["%default_locale%"]
-<% } %>
 
 doctrine:
     dbal:
@@ -75,7 +73,7 @@ imports:
   - { resource: 'parameters.yml' }
   - { resource: 'security.yml' }
   - { resource: 'services.yml' }
-<% if (bundles['bundlesCustom'].indexOf('alpixel/cmsbundle:@dev') !== -1) { %>
+<% if (bundles['bundlesCustom'].indexOf('alpixel/cmsbundle') !== -1) { %>
   - { resource: 'cms.yml' }
 <% } %><% if (bundles['bundlesCustom'].indexOf('friendsofsymfony/elastica-bundle') !== -1) { %>
   - { resource: 'elastica.yml' }
@@ -83,7 +81,7 @@ imports:
   - { resource: 'admin.yml' }
 <% } %>
 
-<% if (bundles['bundlesCustom'].indexOf('alpixel/userbundle:dev-feature/v2') !== -1) { %>
+<% if (bundles['bundlesCustom'].indexOf('alpixel/userbundle') !== -1) { %>
 fos_user:
   db_driver: 'orm'
   firewall_name: 'main'

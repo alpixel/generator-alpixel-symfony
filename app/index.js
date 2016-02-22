@@ -112,17 +112,17 @@ module.exports = yeoman.Base.extend({
           },
           {
             name: 'AlpixelUserBundle',
-            value: 'alpixel/userbundle:dev-feature/v2',
+            value: 'alpixel/userbundle',
             checked: true
           },
           {
             name: 'AlpixelCMSBundle',
-            value: 'alpixel/cmsbundle:@dev',
+            value: 'alpixel/cmsbundle',
             checked: true
           },
           {
             name: 'AlpixelMenuBundle',
-            value: 'alpixel/menu-bundle:@dev',
+            value: 'alpixel/menu-bundle',
             checked: true
           },
           {
@@ -259,6 +259,13 @@ module.exports = yeoman.Base.extend({
         fs.remove('./app/config/elastica.yml')
       }
 
+      //Symfony 3 structure for Symfony 2.*
+      this.fs.move('./app/console', './bin/console');
+      fs.mkdir('./var');
+      this.fs.move('./app/cache', './var/');
+      this.fs.move('./app/logs', './var/');
+      fs.remove('./app/boostrap.php.cache');
+
       this.template('app/config/routing.yml', 'app/config/routing.yml');
       this.template('new_config.yml', 'new_config.yml');
       this.template('app/Resources/themes/default/views/layout/base.html.twig', 'app/Resources/themes/default/views/layout/base.html.twig');
@@ -309,66 +316,7 @@ module.exports = yeoman.Base.extend({
   },
 
   updateAppKernel: function () {
-    var appKernelPath = './app/AppKernel.php';
-    var appKernelContents = htmlWiring.readFileAsString('./app/AppKernel.php');
-    var newAppKernelContents = appKernelContents.replace('new Doctrine\\Bundle\\DoctrineBundle\\DoctrineBundle(),\n            ', '');
-    newAppKernelContents = newAppKernelContents.replace('new Sensio\\Bundle\\FrameworkExtraBundle\\SensioFrameworkExtraBundle(),', 'new Sensio\\Bundle\\FrameworkExtraBundle\\SensioFrameworkExtraBundle(),\n            //Doctrine\n            new Doctrine\\Bundle\\DoctrineBundle\\DoctrineBundle(),\n            new Stof\\DoctrineExtensionsBundle\\StofDoctrineExtensionsBundle(),');
-    newAppKernelContents = newAppKernelContents.replace('Sensio\\Bundle\\GeneratorBundle\\SensioGeneratorBundle();', 'Sensio\\Bundle\\GeneratorBundle\\SensioGeneratorBundle();\n            $bundles[] = new Doctrine\\Bundle\\FixturesBundle\\DoctrineFixturesBundle();\n            $bundles[] = new Elao\\WebProfilerExtraBundle\\WebProfilerExtraBundle();');
-
-    var customBundles = "";
-    customBundles += "\n";
-
-    if (this.bundles['bundlesCustom'].indexOf('sonata-project') !== -1) {
-      customBundles += "            // Admin" + "\n";
-      customBundles += "            new Sonata\\CoreBundle\\SonataCoreBundle()," + "\n";
-      customBundles += "            new Sonata\\DoctrineORMAdminBundle\\SonataDoctrineORMAdminBundle()," + "\n";
-      customBundles += "            new Sonata\\AdminBundle\\SonataAdminBundle()," + "\n";
-      customBundles += "            new Sonata\\BlockBundle\\SonataBlockBundle()," + "\n";
-      customBundles += "            new Ivory\\CKEditorBundle\\IvoryCKEditorBundle()," + "\n";
-      customBundles += "\n";
-    }
-
-    if (this.isMultilingual) {
-      customBundles += "            //i18n" + "\n";
-      customBundles += "            new Lunetics\\LocaleBundle\\LuneticsLocaleBundle()," + "\n";
-      customBundles += "            new JMS\\I18nRoutingBundle\\JMSI18nRoutingBundle()," + "\n";
-      customBundles += "            new JMS\\TranslationBundle\\JMSTranslationBundle()," + "\n";
-      customBundles += "\n";
-    }
-
-    customBundles += "            //Alpixel" + "\n";
-    if (this.bundles['bundlesCustom'].indexOf('alpixel/userbundle:dev-feature/v2') !== -1) {
-      customBundles += "            new Alpixel\\Bundle\\UserBundle\\AlpixelUserBundle()," + "\n";
-    }
-
-    if (this.bundles['bundlesCustom'].indexOf('alpixel/cmsbundle:@dev') !== -1) {
-      customBundles += "            new FOS\\UserBundle\\FOSUserBundle()," + "\n";
-      customBundles += "            new Alpixel\\Bundle\\CMSBundle\\CMSBundle()," + "\n";
-    }
-
-    if (this.bundles['bundlesCustom'].indexOf('alpixel/cronbundle') !== -1) {
-      customBundles += "            new Alpixel\\Bundle\\CronBundle\\CronBundle()," + "\n";
-    }
-
-    if (this.bundles['bundlesCustom'].indexOf('alpixel/menu-bundle:@dev') !== -1) {
-      customBundles += "            new Knp\\Bundle\\MenuBundle\\KnpMenuBundle()," + "\n";
-      customBundles += "            new Alpixel\\Bundle\\MenuBundle\\AlpixelMenuBundle()," + "\n";
-    }
-
-    if (this.bundles['bundlesCustom'].indexOf('alpixel/seobundle') !== -1) {
-      customBundles += "            new Sonata\\SeoBundle\\SonataSeoBundle()," + "\n";
-      customBundles += "            new Alpixel\\Bundle\\SEOBundle\\SEOBundle()," + "\n";
-    }
-
-    if (this.bundles['bundlesCustom'].indexOf('friendsofsymfony/elastica-bundle') !== -1) {
-      customBundles += "            new FOS\\ElasticaBundle\\FOSElasticaBundle()," + "\n";
-    }
-
-    customBundles += "\n";
-    customBundles += "            new AppBundle\\AppBundle(),";
-    newAppKernelContents = newAppKernelContents.replace('new AppBundle\\AppBundle(),', customBundles);
-
-    fs.writeFileSync(appKernelPath, newAppKernelContents);
+      this.template('app/AppKernel.php', 'app/AppKernel.php');
   },
 
   requireBundles: function() {
@@ -420,7 +368,7 @@ module.exports = yeoman.Base.extend({
   install: {
     updateConfig: function () {
 
-      if (this.bundles['bundlesCustom'].indexOf('alpixel/cmsbundle:@dev') !== -1) {
+      if (this.bundles['bundlesCustom'].indexOf('alpixel/cmsbundle') !== -1) {
         fs.writeFileSync('app/config/cms.yml', yaml.dump({
           'cms': {
             'content_types': {}
@@ -435,6 +383,7 @@ module.exports = yeoman.Base.extend({
       }, {indent: 4}));
 
       var config = yaml.safeLoad(fs.readFileSync('app/config/config.yml'));
+      config['doctrine']['dbal'] = {};
 
       var yoConfig = yaml.safeLoad(fs.readFileSync('new_config.yml'));
       var newConfig = merge.recursive(config, yoConfig);
@@ -456,6 +405,8 @@ module.exports = yeoman.Base.extend({
       var appKernelContents = htmlWiring.readFileAsString('./composer.json');
       var newAppKernelContents = appKernelContents.replace('\"relative\"', '\"symlink\"');
       newAppKernelContents = appKernelContents.replace('\"5\.3\.9\"', '\"5.5\"');
+      newAppKernelContents = newAppKernelContents.replace('\"symfony-web-dir\": \"web\",', '        \"symfony-web-dir\": \"web\",\n\"symfony-bin-dir\": \"bin\",\n        \"symfony-var-dir\": \"var\",');
+
       fs.writeFileSync(appKernelPath, newAppKernelContents);
       this.spawnCommand('composer', ['update', '--ignore-platform-reqs']);
     }
