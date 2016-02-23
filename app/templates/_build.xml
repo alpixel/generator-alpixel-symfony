@@ -6,13 +6,28 @@
   <property name="builddir" value="${workspace}/app/build" />
 
   <target name="build"
-  depends="parameters,vendors,bower,drop-db,create-db,cache,assetic,sensio-security-checker,warmup,fixtures,tools-parallel" />
+  depends="parameters,dependencies,gulp,drop-db,create-db,cache,sensio-security-checker,warmup,<% if (bundles['bundlesCustom'].indexOf('friendsofsymfony/elastica-bundle') !== -1) { %>elastica,<% } %>fixtures,tools-parallel" />
+
+  <target name="dependencies" description="Update all the things !">
+    <parallel threadCount="2">
+      <antcall target="vendors"/>
+      <antcall target="npm" />
+      <antcall target="bower" />
+    </parallel>
+  </target>
 
   <target name="tools-parallel" description="Run tools in parallel">
     <parallel threadCount="2">
       <antcall target="phpcs"/>
       <antcall target="lint" />
     </parallel>
+  </target>
+
+  <target name="elastica" description="Run elastica">
+    <exec executable="php" failonerror="true">
+        <arg value="bin/console" />
+        <arg value="fos:elastica:populate" />
+    </exec>
   </target>
 
   <target name="parameters" description="Copy parameters file to real folder">
@@ -23,6 +38,12 @@
         <arg value="s/jenkins_database/${databaseName}/g" />
         <arg value="${basedir}/app/config/parameters.yml.dist" />
       </exec>
+  </target>
+
+  <target name="npm" description="Update npm">
+    <exec executable="npm" failonerror="true">
+        <arg value="install" />
+    </exec>
   </target>
 
   <target name="vendors" description="Update vendors">
@@ -121,13 +142,11 @@
     </exec>
   </target>
 
-  <target name="assetic" description="Dump assetic">
-    <exec executable="php" failonerror="true">
-        <arg value="bin/console" />
-        <arg value="assetic:dump" />
-        <arg value="--env=test" />
+  <target name="gulp" description="Gulp">
+    <exec executable="gulp" failonerror="true">
     </exec>
   </target>
+
 
   <target name="sensio-security-checker" description="Check security issue">
     <exec executable="sensio-security-checker" failonerror="true">
