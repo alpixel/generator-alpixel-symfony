@@ -18,7 +18,12 @@ class AppKernel extends Kernel
             //Doctrine
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-            <% if (bundles['bundlesCustom'].indexOf('sonata-project') !== -1) { %>
+            <% if (bundles['bundlesCustom'].indexOf('friendsofsymfony/elastica-bundle') !== -1) { %>
+
+            //ElasticSearch
+            new FOS\ElasticaBundle\FOSElasticaBundle(),
+
+            <% } %><% if (bundles['bundlesCustom'].indexOf('sonata-project') !== -1) { %>
 
             // Admin
             new Sonata\CoreBundle\SonataCoreBundle(),
