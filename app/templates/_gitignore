@@ -33,3 +33,4 @@ composer.lock
 Gruntfile.js.*
 sitemap.*xml*
 web/lib
+npm-debug.log
