@@ -7,17 +7,17 @@ Thumbs.db
 koala-config.json
 .smbdelete*
 .ida
+.idea
 
 # Symfony
 /web/bundles/
 /app/bootstrap.php.cache
-*/cache/*
-*/logs/*
-*/sessions/*
+/var/bootstrap.php.cache
+**/cache/*
+**/logs/*
+**/sessions/*
 /app/config/parameters.yml
-/build/
 /vendor/
-/bin/
 /composer.phar
 
 # Custom
@@ -32,3 +32,4 @@ behat.yml
 composer.lock
 Gruntfile.js.*
 sitemap.*xml*
+web/lib

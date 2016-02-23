@@ -2,6 +2,7 @@ framework:
   session:
     name: "ALPIXEL_SESSID"
     handler_id: ~
+    save_path: "%kernel.root_dir%/../var/sessions"
   translator:
     fallback: ["%default_locale%"]
 
@@ -37,7 +38,7 @@ sonata_seo:
         description: ""
 
 seo:
-  sitemap_base_url: "http://www.changeme.fr"
+  sitemap_base_url: "%url_production%"
 <% } %>
 
 <% if (bundles['bundlesCustom'].indexOf('alpixel/mediabundle') !== -1) { %>

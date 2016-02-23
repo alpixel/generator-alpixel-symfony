@@ -377,6 +377,7 @@ module.exports = yeoman.Base.extend({
 
       var newConfig = config.replace('framework:', yoConfig+'\n\nframework:');
       fs.writeFile('app/config/config_dev.yml', newConfig);
+      fs.remove('new_config_dev.yml');
     },
     installComponents: function () {
       fs.copySync(this.templatePath('src'), this.destinationPath('src'));
