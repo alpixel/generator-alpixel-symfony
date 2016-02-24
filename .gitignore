@@ -7,3 +7,4 @@ dist/
 .idea/
 temp/
 .DS_Store
+*.sublime*

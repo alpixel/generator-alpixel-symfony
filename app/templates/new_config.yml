@@ -29,8 +29,7 @@ stof_doctrine_extensions:
       sluggable: true
       sortable: true
 
-<% if (bundles['bundlesCustom'].indexOf('alpixel/seobundle') !== -1) { %>
-sonata_seo:
+<% if (bundles['bundlesCustom'].indexOf('alpixel/seobundle') !== -1) { %>sonata_seo:
   page:
     title: "ALPIXEL - Symfony"
     metas:
@@ -38,17 +37,23 @@ sonata_seo:
         description: ""
 
 seo:
-  sitemap_base_url: "%url_production%"
-<% } %>
+  sitemap_base_url: "%url_production%"<% } %>
 
-<% if (bundles['bundlesCustom'].indexOf('alpixel/mediabundle') !== -1) { %>
-media:
-  upload_folder: "%kernel.root_dir%/../web/upload/"
-  allowed_mimetypes: ['image/*', 'application/pdf']
-<% } %>
+<% if (bundles['bundlesCustom'].indexOf('alpixel/mediabundle') !== -1) { %>liip_imagine:
+    resolvers:
+        default:
+            web_path:
+                web_root: "%alpixel_media.upload_folder%"
+                cache_prefix: "filters"
+    filter_sets:
+        cache: ~
+        admin:
+            quality: 100
+            filters:
+                auto_rotate: ~
+                thumbnail: { size: [140, 93], mode: outbound }<% } %>
 
-<% if (isMultilingual) { %>
-jms_translation:
+<% if (isMultilingual) { %>jms_translation:
   locales: '%enabled_locales%'
   source-language: '%default_locale%'
   configs:
@@ -67,34 +72,28 @@ jms_i18n_routing:
 
 lunetics_locale:
   allowed_locales: '%enabled_locales%'
-  guessing_order: ['query', 'router', 'session', 'browser']
-<% } %>
+  guessing_order: ['query', 'router', 'session', 'browser']<% } %>
 
 imports:
   - { resource: 'parameters.yml' }
   - { resource: 'security.yml' }
   - { resource: 'services.yml' }
-<% if (bundles['bundlesCustom'].indexOf('alpixel/cmsbundle') !== -1) { %>
-  - { resource: 'cms.yml' }
-<% } %><% if (bundles['bundlesCustom'].indexOf('friendsofsymfony/elastica-bundle') !== -1) { %>
-  - { resource: 'elastica.yml' }
-<% } %><% if (bundles['bundlesCustom'].indexOf('sonata-project') !== -1) { %>
-  - { resource: 'admin.yml' }
-<% } %>
+  <% if (bundles['bundlesCustom'].indexOf('alpixel/cmsbundle') !== -1) { %>- { resource: 'cms.yml' }<% } %>
+  <% if (bundles['bundlesCustom'].indexOf('friendsofsymfony/elastica-bundle') !== -1) { %>- { resource: 'elastica.yml' }<% } %>
+  <% if (bundles['bundlesCustom'].indexOf('sonata-project') !== -1) { %>- { resource: 'admin.yml' }<% } %>
 
-<% if (bundles['bundlesCustom'].indexOf('alpixel/userbundle') !== -1) { %>
-fos_user:
+<% if (bundles['bundlesCustom'].indexOf('alpixel/userbundle') !== -1) { %>fos_user:
   db_driver: 'orm'
   firewall_name: 'main'
-  user_class: 'AppBundle\Entity\User'
-<% } %>
+  user_class: 'AppBundle\Entity\User'<% } %>
 
 twig:
   globals:
       base_url: "%url_production%"
+  <% if (bundles['bundlesCustom'].indexOf('alpixel/mediabundle') !== -1) { %>form:
+      resources:
+          - 'AlpixelMediaBundle:Form:fields.html.twig'<% } %>
   paths:
     - "%kernel.root_dir%/Resources/themes/%theme%/views/"
-<% if (bundles['bundlesCustom'].indexOf('sonata-project') !== -1) { %>
-    - "%kernel.root_dir%/Resources/themes/admin/views/"
-<% } %>
+    <% if (bundles['bundlesCustom'].indexOf('sonata-project') !== -1) { %>- "%kernel.root_dir%/Resources/themes/admin/views/"<% } %>
 

@@ -116,6 +116,11 @@ module.exports = yeoman.Base.extend({
             checked: true
           },
           {
+            name: 'AlpixelMediaBundle',
+            value: 'alpixel/mediabundle',
+            checked: true
+          },
+          {
             name: 'AlpixelCMSBundle',
             value: 'alpixel/cmsbundle',
             checked: true
@@ -133,7 +138,7 @@ module.exports = yeoman.Base.extend({
           {
             name: 'AlpixelCronBundle',
             value: 'alpixel/cronbundle',
-            checked: false
+            checked: true
           },
           {
             name: 'FOSElasticaBundle',
@@ -311,7 +316,7 @@ module.exports = yeoman.Base.extend({
         ]);
       } else if (this.bundles['bundlesCustom'][i] == 'alpixel/seobundle') {
         bundles = bundles.concat([
-          'alpixel/seobundle:@dev', 'sonata-project/seo-bundle'
+          'alpixel/seobundle', 'sonata-project/seo-bundle'
         ]);
       } else {
         bundles = bundles.concat([this.bundles['bundlesCustom'][i]]);

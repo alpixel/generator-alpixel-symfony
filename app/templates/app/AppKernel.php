@@ -22,7 +22,6 @@ class AppKernel extends Kernel
 
             //ElasticSearch
             new FOS\ElasticaBundle\FOSElasticaBundle(),
-
             <% } %><% if (bundles['bundlesCustom'].indexOf('sonata-project') !== -1) { %>
 
             // Admin
@@ -31,38 +30,36 @@ class AppKernel extends Kernel
             new Sonata\AdminBundle\SonataAdminBundle(),
             new Sonata\BlockBundle\SonataBlockBundle(),
             new Ivory\CKEditorBundle\IvoryCKEditorBundle(),
-
             <% } %><% if (isMultilingual) { %>
 
             //i18n
             new Lunetics\LocaleBundle\LuneticsLocaleBundle(),
             new JMS\I18nRoutingBundle\JMSI18nRoutingBundle(),
             new JMS\TranslationBundle\JMSTranslationBundle(),
-
             <% } %><% if (bundles['bundlesCustom'].indexOf('alpixel/userbundle') !== -1) { %>
 
             //Alpixel User
             new Alpixel\Bundle\UserBundle\AlpixelUserBundle(),
             new FOS\UserBundle\FOSUserBundle(),
-
-
             <% } %><% if (bundles['bundlesCustom'].indexOf('alpixel/cmsbundle') !== -1) { %>
 
             //Alpixel CMS bundle
             new Alpixel\Bundle\CMSBundle\CMSBundle(),
-
-
             <% } %><% if (bundles['bundlesCustom'].indexOf('alpixel/menu-bundle') !== -1) { %>
 
             //Alpixel Menu
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Alpixel\Bundle\MenuBundle\AlpixelMenuBundle(),
-
             <% } %><% if (bundles['bundlesCustom'].indexOf('alpixel/seobundle') !== -1) { %>
 
             //Alpixel SEO
             new Sonata\SeoBundle\SonataSeoBundle(),
             new Alpixel\Bundle\SEOBundle\SEOBundle(),
+            <% } %><% if (bundles['bundlesCustom'].indexOf('alpixel/mediabundle') !== -1) { %>
+
+            //ALPIXEL Media
+            new Alpixel\Bundle\MediaBundle\AlpixelMediaBundle(),
+            new Liip\ImagineBundle\LiipImagineBundle(),
 
             <% } %>
             new AppBundle\AppBundle(),
