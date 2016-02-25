@@ -43,13 +43,33 @@
             <script src="lib/html5shiv/dist/html5shiv.min.js"></script>
         <![endif]-->
 
+        <!-- STRUCTURED DATAS -->
+        <!--
         <script type="application/ld+json">
-            { "@context" : "http://schema.org",
-              "@type" : "Organization",
-              "name" : "My organisation",
-              "url" : "http://www.organization.fr"
-            }
+        {
+            "@context" : "http://schema.org",
+            "@type" : "Organization",
+            "name" : "ChuckCSS",
+            "url" : "http://www.mywebsite.com",
+            "logo": "http://www.mywebsite.com/sites/all/themes/mywebsite/logo.png",
+            "description" : "Description de la société",
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "VIVIERS-DU-LAC, France",
+              "postalCode": "73420",
+              "streetAddress": "242 rue Maurice Herzog"
+            },
+            "contactPoint" : [{
+              "@type" : "ContactPoint",
+              "telephone" : "+33 (0)4 79 54 20 66"
+              "availableLanguage" : [
+                "French",
+                "English"
+              ]
+            }]
+        }
         </script>
+        -->
 
         {% if app.environment == "prod" %}
             <script>
