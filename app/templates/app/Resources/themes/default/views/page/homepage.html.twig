@@ -1,5 +1,11 @@
 {% extends 'layout/base.html.twig' %}
 
+{% block header %}
+    <header id="main-header">
+        Coucou je suis le footer
+    </header>
+{% endblock %}
+
 {% block page %}
   <h1><span>Bienvenue dans la distribution</span> Symfony {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }} d'ALPIXEL</h1>
   <img src='http://media.rd.com/rd/images/rdc/slideshows/10-cool-dogs/10-cool-dogs-ginger-af.jpg' />
@@ -8,3 +14,8 @@
   {{ knp_menu_render('main') }}
 {% endblock %}
 
+{% block footer %}
+    <footer id="main-footer">
+        Coucou je suis le footer
+    </footer>
+{% endblock %}

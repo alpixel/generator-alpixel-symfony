@@ -95,11 +95,16 @@
             <a href="#" class="accept-cookie close btn cc-blue">J'ai compris</a>
         </div>
 
+        {# Main Header #}
+        {% block header %}{% endblock %}
 
         {# CONTENT #}
         <div id="content">
             {% block page %}{% endblock %}
         </div>
+
+        {# Main Footer #}
+        {% block footer %}{% endblock %}
 
         {% block javascripts %}
           <script type="text/javascript">
