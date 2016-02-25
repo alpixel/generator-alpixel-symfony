@@ -1,16 +1,9 @@
+/* Import ChuckCSS sources */
 @import '../../../../../web/lib/ChuckCSS/chuckcss/front.less';
-@import 'settings';
-
-h1 {
-  color: @orange;
-}
+/* Override ChuckCSS vars */
+@import 'settings-override';
 
 
-h1,.h1-like,
-h2,.h2-like,
-h3,.h3-like,
-h4,.h4-like,
-h5,.h5-like,
-h6,.h6-like {
-  color: @orange;
-}
+/* *** SPECIFIC *** */
+/* Import specific less files */
+@import "homepage";
