@@ -2,11 +2,21 @@
 @import '../../../../../web/lib/ChuckCSS/chuckcss/front.less';
 /* Override ChuckCSS vars */
 @import 'settings-override';
+
+/* Import jquery plugins less files */
+/*@import "jquery-plugins/flexslider";*/
+
 /* Import Cookie & Outdatedbrowser files (helpers) */
 @import 'helpers/cookies';
 @import 'helpers/outdated';
 
 /* *** SPECIFIC *** */
 /* Import specific less files */
+@import "website/common";
 @import "website/homepage";
 @import "website/header-footer";
+
+/* *** RESPONSIVE *** */
+/* Import specific responsive less files */
+@import "media/tablet";
+@import "media/phone";
