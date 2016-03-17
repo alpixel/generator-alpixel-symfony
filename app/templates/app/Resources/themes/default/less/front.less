@@ -1,7 +1,24 @@
 /* Import ChuckCSS sources */
 @import '../../../../../web/lib/ChuckCSS/chuckcss/front.less';
+
+@import 'helpers/functions';
+
 /* Override ChuckCSS vars */
 @import 'settings-override';
+
+body {
+    .cc-inside {
+        ._inside(1400px);
+    }
+}
+
+/* define text selection */
+::-moz-selection {
+    background: black;
+}
+::selection {
+    background: black;
+}
 
 /* Import jquery plugins less files */
 /*@import "jquery-plugins/flexslider";*/
@@ -16,7 +33,16 @@
 @import "website/homepage";
 @import "website/header-footer";
 
+
 /* *** RESPONSIVE *** */
-/* Import specific responsive less files */
-@import "media/tablet";
-@import "media/phone";
+._tablet({
+    .cc-inside {
+        ._inside(728px);
+    }
+});
+
+._phone({
+    .cc-inside {
+        ._inside(100%);
+    }
+});
