@@ -18,8 +18,6 @@ doctrine:
                 user:     "%database_user%"
                 password: "%database_password%"
                 charset:  utf8mb4
-            default_table_options:
-                charset: utf8mb4
 
 stof_doctrine_extensions:
   default_locale: 'fr_FR'
@@ -28,6 +26,14 @@ stof_doctrine_extensions:
       timestampable: true
       sluggable: true
       sortable: true
+
+
+<% if (bundles['bundlesCustom'].indexOf('alpixel/menu-bundle') !== -1) { %>#Menu and breadcrumbs
+knp_menu:
+    twig:
+        template: AlpixelMenuBundle:blocks:menu.html.twig
+    templating: false
+    default_renderer: twig<% } %>
 
 <% if (bundles['bundlesCustom'].indexOf('alpixel/seobundle') !== -1) { %>sonata_seo:
   page:
