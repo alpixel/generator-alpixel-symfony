@@ -27,6 +27,14 @@ stof_doctrine_extensions:
       sluggable: true
       sortable: true
 
+
+<% if (bundles['bundlesCustom'].indexOf('alpixel/menu-bundle') !== -1) { %>#Menu and breadcrumbs
+knp_menu:
+    twig:
+        template: AlpixelMenuBundle:blocks:menu.html.twig
+    templating: false
+    default_renderer: twig<% } %>
+
 <% if (bundles['bundlesCustom'].indexOf('alpixel/seobundle') !== -1) { %>sonata_seo:
   page:
     title: "ALPIXEL - Symfony"
