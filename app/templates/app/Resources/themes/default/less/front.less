@@ -7,9 +7,7 @@
 @import 'settings-override';
 
 body {
-    .cc-inside {
-        ._inside(1400px);
-    }
+
 }
 
 /* define text selection */
@@ -23,26 +21,14 @@ body {
 /* Import jquery plugins less files */
 /*@import "jquery-plugins/flexslider";*/
 
-/* Import Cookie & Outdatedbrowser files (helpers) */
+/* Import Helpers files */
 @import 'helpers/cookies';
 @import 'helpers/outdated';
+@import 'helpers/tools';
+
 
 /* *** SPECIFIC *** */
 /* Import specific less files */
 @import "website/common";
 @import "website/homepage";
 @import "website/header-footer";
-
-
-/* *** RESPONSIVE *** */
-._tablet({
-    .cc-inside {
-        ._inside(728px);
-    }
-});
-
-._phone({
-    .cc-inside {
-        ._inside(100%);
-    }
-});
