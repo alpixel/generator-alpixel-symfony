@@ -12,7 +12,8 @@ monolog:
             members:            [streamed, swift]
             members:            [streamed]
         streamed:
-            type:               stream
+            type:               rotating_file
+            max_files:          10
             path:               "%kernel.logs_dir%/%kernel.environment%.log"
             level:              debug
         swift:
@@ -22,7 +23,8 @@ monolog:
             subject:            "[%url_production%] Erreur"
             level:              critical
         login:
-            type:               stream
+            type:               rotating_file
+            max_files:          10
             path:               "%kernel.logs_dir%/auth.log"
             level:              info
             channels:           security
