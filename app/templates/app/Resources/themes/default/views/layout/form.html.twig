@@ -1,0 +1,53 @@
+{% use "form_div_layout.html.twig" %}
+
+
+{#
+    -- @ Rows @ --
+    Add 'form-item' class to each row (required for ChuckCSS)
+#}
+{%- block form_row -%}
+    {#{{ dump(_context) }}#}
+
+    {%- set type = block_prefixes.1|default('text') -%}
+
+    <div class="form-item">
+
+        {% if type == "checkbox" or type == "radio" %}
+            <div class="form-{{type}}">
+                {{- form_widget(form) -}}
+                {{- form_label(form) -}}
+                {{- form_errors(form) -}}
+            </div>
+        {% else %}
+            {{- form_label(form) -}}
+            {{- form_widget(form) -}}
+            {{- form_errors(form) -}}
+        {% endif %}
+
+    </div>
+
+{%- endblock form_row -%}
+
+
+{#
+    -- @ MULTIPLE CHECKBOXES or RADIO @ --
+    Add 'form-{{type}}' class to each row (required for ChuckCSS)
+#}
+{%- block choice_widget_expanded -%}
+
+    {%- set type = 'checkbox' -%}
+    {%- set isMultiple = multiple|default(true) -%}
+
+    {% if isMultiple == false %}
+        {%- set type = 'radio' -%}
+    {% endif %}
+
+    <div {{ block('widget_container_attributes') }}>
+        {%- for child in form %}
+            <div class="form-{{type}}">
+                {{- form_widget(child) -}}
+                {{- form_label(child, null, {translation_domain: choice_translation_domain}) -}}
+            </div>
+        {% endfor -%}
+    </div>
+{%- endblock choice_widget_expanded -%}

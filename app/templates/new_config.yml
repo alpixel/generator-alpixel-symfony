@@ -99,7 +99,8 @@ twig:
       base_url: "%url_production%"
   <% if (bundles['bundlesCustom'].indexOf('alpixel/mediabundle') !== -1) { %>form:
       resources:
-          - 'AlpixelMediaBundle:Form:fields.html.twig'<% } %>
+          - 'AlpixelMediaBundle:Form:fields.html.twig'
+          - 'layout/form.html.twig'<% } %>
   paths:
     - "%kernel.root_dir%/Resources/themes/%theme%/views/"
     <% if (bundles['bundlesCustom'].indexOf('sonata-project') !== -1) { %>- "%kernel.root_dir%/Resources/themes/admin/views/"<% } %>
