@@ -1,9 +1,8 @@
 {% extends 'layout/base.html.twig' %}
 
 {% block header %}
-    <header id="main-header">
-        Coucou je suis le header
-    </header>
+    {% embed 'block/header.html.twig' %}
+    {% endembed %}
 {% endblock %}
 
 {% block page %}
@@ -15,7 +14,6 @@
 {% endblock %}
 
 {% block footer %}
-    <footer id="main-footer">
-        Coucou je suis le footer
-    </footer>
+    {% embed 'block/footer.html.twig' %}
+    {% endembed %}
 {% endblock %}

@@ -106,6 +106,60 @@
             e.preventDefault();
         });
 
+                /*
+            -- @ FLEXSLIDER @ --
+        */
+        // if($('.flexslider').length) {
+
+        //     $('.flexslider').each(function(i,el){
+        //         var
+        //             animation = 'fade',
+        //             showArrows = false,
+        //             pauseOnAction = false;
+
+        //         // Specific for last news slider
+        //         if($(this).hasClass('flex-news')) {
+        //             var
+        //                 animation = 'slide',
+        //                 pauseOnAction = true;
+        //         }
+
+        //         // Specific for news detail page
+        //         if($(this).hasClass('flex-news-detail')) {
+        //             var
+        //                 pauseOnAction = true;
+        //         }
+
+        //         $(this).flexslider({
+        //             animation: animation,
+        //             animationLoop: true,
+        //             directionNav: showArrows,
+        //             controlNav:true,
+        //             slideshow:true,
+        //             slideShowSpeed : 5000,
+        //             pauseOnAction : pauseOnAction,
+        //             start : function(slider) {
+        //                 slider.find('.flexLoader').fadeOut('fast',function(){
+        //                     $(this).remove();
+        //                 });
+        //             }
+        //         });
+        //     });
+        // }
+
+        /*
+            -- @ BACKSTRETCH @ --
+            * Attach responsive background-images to elements
+        */
+        // if($('.backstretch').length) {
+        //     $('.backstretch').each(function(i,el){
+        //         var imgName = $(this).attr('data-img');
+
+        //         if(imgName != '' || imgName !== 'undefined')
+        //             $(this).backstretch(imgName);
+        //     });
+        // }
+
 
     });
 })(jQuery);
