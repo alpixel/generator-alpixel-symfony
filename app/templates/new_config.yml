@@ -94,6 +94,7 @@ imports:
   user_class: 'AppBundle\Entity\User'<% } %>
 
 twig:
+  exception_controller:  'alpixel_cms.exception_controller:showAction'
   globals:
       base_url: "%url_production%"
   <% if (bundles['bundlesCustom'].indexOf('alpixel/mediabundle') !== -1) { %>form:

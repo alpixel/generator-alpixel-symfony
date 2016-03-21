@@ -6,9 +6,6 @@ app:
     resource: '@AlpixelUserBundle/Resources/config/routing.yml'
     options: { i18n: false }<% } %>
 
-<% if (bundles['bundlesCustom'].indexOf('alpixel/cmsbundle') !== -1) { %>cms_page:
-    resource: '@CMSBundle/Resources/config/routing.yml'<% } %>
-
 <% if (bundles['bundlesCustom'].indexOf('sonata-project') !== -1) { %>sonata_admin_home:
     resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
     prefix: %admin_path%
@@ -22,3 +19,7 @@ sonata_admin_base:
 
 <% if (bundles['bundlesCustom'].indexOf('alpixel/mediabundle') !== -1) { %>alpixel_media:
     resource: '@AlpixelMediaBundle/Resources/config/routing.yml'<% } %>
+
+<% if (bundles['bundlesCustom'].indexOf('alpixel/cmsbundle') !== -1) { %>#SHOULD BE LAST
+alpixel_cms:
+    resource: '@AlpixelCMSBundle/Resources/config/routing.yml'<% } %>
