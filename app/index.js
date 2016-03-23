@@ -282,6 +282,7 @@ module.exports = yeoman.Base.extend({
     config['parameters']['admin_path'] = '/admin';
     config['parameters']['theme'] = 'default';
     config['parameters']['lib_dir'] = 'lib';
+    config['parameters']['mailer_port'] = null;
     config['parameters']['url_production'] = "http://"+this.appname;
 
     if (this.bundles['bundlesCustom'].indexOf('friendsofsymfony/elastica-bundle') !== -1) {
