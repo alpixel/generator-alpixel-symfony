@@ -1,4 +1,6 @@
 framework:
+    esi:
+        enabled: true
   session:
     name: "ALPIXEL_SESSID"
     handler_id: ~
