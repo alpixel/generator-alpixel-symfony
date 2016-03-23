@@ -1,22 +1,32 @@
 /* Import ChuckCSS sources */
 @import '../../../../../web/lib/ChuckCSS/chuckcss/front.less';
 
-@import 'helpers/functions';
-
 /* Override ChuckCSS vars */
 @import 'settings-override';
 
 body {
+    .cc-inside {
+        ._inside(1400px);
+    }
+
     ._tablet({
         @text-fs-old : 16px;
         @text-fs : 1.6rem;
         font-size: 1.6rem;
+
+        .cc-inside {
+            ._inside(708px);
+        }
     });
 
     ._phone({
         @text-fs-old : 14px;
         @text-fs : 1.4rem;
         font-size: 1.4rem;
+
+        .cc-inside {
+            ._inside(100%);
+        }
     });
 }
 
@@ -32,8 +42,12 @@ body {
 /*@import "jquery-plugins/flexslider";*/
 
 /* Import Helpers files */
+@import 'helpers/functions';
 @import 'helpers/cookies';
 @import 'helpers/outdated';
+@import 'helpers/tooltips';
+@import 'helpers/modals';
+@import 'helpers/wow';
 
 
 

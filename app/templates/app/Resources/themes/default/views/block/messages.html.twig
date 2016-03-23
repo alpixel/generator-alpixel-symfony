@@ -1,0 +1,18 @@
+{% for type, flashMessages in app.session.flashbag.all() %}
+    {% for flashMessage in flashMessages %}
+        <div class="alert alert-{{type}}">
+            {{ flashMessage|raw }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
+{% if error is defined and error is not empty %}
+    <div class="alert alert-error fa-exclamation-triangle">{{ error|trans }}</div>
+{% endif %}
+
+
+{% if form is defined and form_errors(form)|trim is not empty %}
+    <div class="alert alert-error fa-exclamation-triangle">
+        {{form_errors(form)}}
+    </div>
+{% endif %}

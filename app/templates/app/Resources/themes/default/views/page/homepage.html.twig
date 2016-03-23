@@ -6,11 +6,19 @@
 {% endblock %}
 
 {% block page %}
-  <h1><span>Bienvenue dans la distribution</span> Symfony {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }} d'ALPIXEL</h1>
-  <img src='http://media.rd.com/rd/images/rdc/slideshows/10-cool-dogs/10-cool-dogs-ginger-af.jpg' />
-  <div class="alert alert-success"><i class="ion-android-checkmark-circle"></i> Such success</div>
-  <h2>Le menu :</h2>
-  {{ knp_menu_render('main') }}
+
+    {# MESSAGES #}
+    {% include 'block/messages.html.twig' %}
+
+
+    <h1><span>Bienvenue dans la distribution</span> Symfony {{ constant('Symfony\\Component\\HttpKernel\\Kernel::VERSION') }} d'ALPIXEL</h1>
+
+    <img src='http://media.rd.com/rd/images/rdc/slideshows/10-cool-dogs/10-cool-dogs-ginger-af.jpg' />
+
+    <div class="alert alert-success"><i class="ion-android-checkmark-circle"></i> Such success</div>
+
+    <h2>Le menu :</h2>
+    {{ knp_menu_render('main') }}
 {% endblock %}
 
 {% block footer %}
