@@ -6,6 +6,8 @@
 {% endblock %}
 
 {% block page %}
+    {# ADMIN BAR #}
+    {% include 'block/admin_bar.html.twig' with {page: page} %}
 
     {# MESSAGES #}
     {% include 'block/messages.html.twig' %}
