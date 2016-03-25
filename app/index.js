@@ -340,7 +340,6 @@ module.exports = yeoman.Base.extend({
   requireBundleDev: function() {
     var done = this.async();
     var sc = this.spawnCommand('composer', ['require', '--no-update', '--dev',
-      'elao/web-profiler-extra-bundle',
       'doctrine/doctrine-fixtures-bundle',
       'fzaninotto/faker',
       'nelmio/alice'
