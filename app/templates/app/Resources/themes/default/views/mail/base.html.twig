@@ -1,115 +1,502 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="fr">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+    <meta name="viewport" content="width=device-width">
     <title></title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
     <style type="text/css">
-        body { width: 600 !important; -webkit-text-size-adjust: none; -ms-text-size-adjust: none; }
+        #outlook a{
+            padding:0;
+        }
+        body{
+            width:100% !important;
+            -webkit-text-size-adjust:none;
+            -webkit-font-smoothing:antialiased;
+            height:100%;
+            margin:0;
+            padding:0;
+            font-size:14px;
+            color:#2A2A2A;
+            font-family:Arial, Helvetica, sans-serif;
+        }
+        body,#bodyTable{
+            background-color:#F0F0F0;
+        }
+        body,#bodyTable,#bodyCell{
+            height:100%;
+            margin:0;
+            padding:0;
+            width:100%;
+        }
+        #bodyTable{
+            table-layout:fixed;
+        }
+        #bodyCell{
+            padding-top:0px;
+            padding-right:10px;
+            padding-bottom:0px;
+            padding-left:10px;
+        }
+        .clear{
+            display:block;
+            clear:both;
+            width:0px;
+            height:0px;
+        }
+        .templateContainer{
+            max-width:600px;
+        }
+        table{
+            mso-table-lspace:0pt;
+            mso-table-rspace:0pt;
+            margin:0 auto;
+        }
+        img{
+            -ms-interpolation-mode:bicubic;
+            border:none;
+            font-size:14px;
+            font-weight:bold;
+            height:auto;
+            line-height:100%;
+            outline:none;
+            text-decoration:none;
+            text-transform:capitalize;
+            max-width:100%;
+        }
+        td{
+            width:600px;
+            max-width:600px;
+        }
+        p,a,li,td,blockquote{
+            mso-line-height-rule:exactly;
+        }
+        a[href^=tel],a[href^=sms]{
+            color:inherit;
+            cursor:default;
+            text-decoration:none;
+        }
+        p,a,li,td,body,table,blockquote{
+            -ms-text-size-adjust:100%;
+            -webkit-text-size-adjust:100%;
+        }
+        a[class=btn],a.btn{
+            text-transform:uppercase;
+            background-color:#b5121b;
+            color:#ffffff;
+            display:inline-block;
+            font-family:sans-serif;
+            font-size:24px;
+            font-weight:bold;
+            line-height:53px;
+            text-align:center;
+            text-decoration:none;
+            min-width:200px;
+            -webkit-text-size-adjust:none;
+            padding:0 30px;
+        }
+
+        h1,h2,h3,h4,h5,h6{
+            display:block;
+            margin:0;
+            padding:0;
+        }
+        h1{
+            /*@editable*/color:#81979b !important;
+            /*@editable*/font-family:Arial;
+            /*@editable*/font-size:20px;
+            /*@editable*/font-style:normal;
+            /*@editable*/font-weight:400;
+            /*@editable*/line-height:150%;
+            /*@editable*/text-align:center;
+        }
+        h2{
+            /*@editable*/color:#81979b !important;
+            /*@editable*/font-family:Arial;
+            /*@editable*/font-size:18px;
+            /*@editable*/font-style:italic;
+            /*@editable*/font-weight:normal;
+            /*@editable*/line-height:150%;
+            /*@editable*/text-align:center;
+        }
+        h3{
+            /*@editable*/color:#81979b !important;
+            /*@editable*/font-family:Arial;
+            /*@editable*/font-size:24px;
+            /*@editable*/font-style:normal;
+            /*@editable*/font-weight:400;
+            /*@editable*/line-height:150%;
+            /*@editable*/text-align:center;
+        }
+        h4{
+            /*@editable*/color:#81979b !important;
+            /*@editable*/font-family:Arial;
+            /*@editable*/font-size:16px;
+            /*@editable*/font-style:normal;
+            /*@editable*/font-weight:400;
+            /*@editable*/line-height:150%;
+            /*@editable*/text-align:center;
+            text-transform:uppercase;
+        }
+
+        *[class=paddingTop0]{
+            padding-top:0px !important;
+        }
+        *[class=paddingTop10]{
+            padding-top:10px !important;
+        }
+        *[class=paddingTop20]{
+            padding-top:20px !important;
+        }
+        *[class=paddingTop30]{
+            padding-top:30px !important;
+        }
+        *[class=paddingTop40]{
+            padding-top:40px !important;
+        }
+        *[class=paddingTop50]{
+            padding-top:50px !important;
+        }
+        *[class=paddingLeft0]{
+            padding-left:0px !important;
+        }
+        *[class=paddingLeft10]{
+            padding-left:10px !important;
+        }
+        *[class=paddingLeft20]{
+            padding-left:20px !important;
+        }
+        *[class=paddingLeft30]{
+            padding-left:30px !important;
+        }
+        *[class=paddingLeft40]{
+            padding-left:40px !important;
+        }
+        *[class=paddingLeft50]{
+            padding-left:50px !important;
+        }
+        *[class=paddingRight0]{
+            padding-right:0px !important;
+        }
+        *[class=paddingRight10]{
+            padding-right:10px !important;
+        }
+        *[class=paddingRight20]{
+            padding-right:20px !important;
+        }
+        *[class=paddingRight30]{
+            padding-right:30px !important;
+        }
+        *[class=paddingRight40]{
+            padding-right:40px !important;
+        }
+        *[class=paddingRight50]{
+            padding-right:50px !important;
+        }
+        *[class=paddingBottom0]{
+            padding-bottom:0px !important;
+        }
+        *[class=paddingBottom10]{
+            padding-bottom:10px !important;
+        }
+        *[class=paddingBottom20]{
+            padding-bottom:20px !important;
+        }
+        *[class=paddingBottom30]{
+            padding-bottom:30px !important;
+        }
+        *[class=paddingBottom40]{
+            padding-bottom:40px !important;
+        }
+        *[class=paddingBottom50]{
+            padding-bottom:50px !important;
+        }
+
+
+        @media only screen and (max-width: 600px){
+            body{
+                width:100% !important;
+                min-width:100% !important;
+                -webkit-text-size-adjust:none !important;
+            }
+
+            .templateContainer{
+                width:90% !important;
+                max-width:90% !important;
+                margin:0 auto !important;
+            }
+
+            a.btn,a[class=btn]{
+                display:block!important;
+                margin-bottom:10px!important;
+                background-image:none!important;
+                margin-right:0!important;
+            }
+
+            table{
+                width:100% !important;
+                max-width:100% !important;
+            }
+
+            img[class=responsive]{
+                width:100% !important;
+                max-width:100% !important;
+            }
+
+            #bodyCell{
+                padding-top:0px;
+                padding-right:0px;
+                padding-bottom:0px;
+                padding-left:0px;
+            }
+
+            h1{
+                /*@editable*/font-size:15px;
+            }
+
+            h2{
+                /*@editable*/font-size:13px;
+            }
+
+            h3{
+                /*@editable*/font-size:11px;
+            }
+
+            td[class=columnsContainer]{
+                display:block !important;
+                max-width:600px !important;
+                width:100% !important;
+            }
+
+            td[class=columnsContainerCell]{
+                padding-left:20px !important;
+                padding-right:20px !important;
+                padding-bottom:15px !important;
+            }
+        }
     </style>
 </head>
-<body bgcolor="#ffffff" topmargin="0" alink="#000" link="#000" vlink="#000" text="#000" style="width: 600 !important; -webkit-text-size-adjust: none; -ms-= text-size-adjust: none; background: #ffffff; margin: 0; padding: 0;">
-<table width="600" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
-    <!-- SPACE -->
-    <tr width="600" height="25" border="0" bgcolor="#ffffff">
-        <td width="600" height="25" align="center" border="0" bgcolor="#ffffff"></td>
-    </tr>
-    <!-- LOGO -->
-    <tr width="600" height="61" border="0" bgcolor="#ffffff">
-        <td width="600" height="61" align="center" border="0" bgcolor="#ffffff">
-            <img src="http://lorempixel.com/400/200/" alt="" width="168" height="61" border="0" style="display: block;" />
-        </td>
-    </tr>
-    <!-- SPACE -->
-    <tr width="600" height="25" border="0" bgcolor="#ffffff">
-        <td width="600" height="25" align="center" border="0" bgcolor="#ffffff"></td>
-    </tr>
-    <!-- HEADER -->
-    <tr width="600" border="0" bgcolor="#738e94">
-        <td width="600" align="left" border="0" bgcolor="#738e94">
-            <table width="600" cellpadding="0" cellspacing="0" bgcolor="#738e94" style="border: 1px solid #738e94;">
-                <tr width="600" border="0" bgcolor="#738e94">
-                    <td width="25" align="left" border="0" bgcolor="#738e94">
-                        <img src="{{base_url}}/images/mails/spacer.gif" width="25" height="1" border="0" bgcolor="#738e94" style="display:block;" />
-                    </td>
-                    <td width="550" align="left" border="0" bgcolor="#738e94">
-                        <table width="550" cellpadding="0" cellspacing="0" border="0" bgcolor="#738e94">
-                            <tr width="550" height="10" border="0" bgcolor="#738e94">
-                                <td width="550" height="10" border="0" align="left" bgcolor="#738e94"></td>
-                            </tr>
-                            <tr width="550" border="0" bgcolor="#738e94">
-                                <td width="550" border="0" align="left" bgcolor="#738e94" color="#ffffff" style="color: #ffffff;">
-                                    {% block header %}{% endblock %}
-                                </td>
-                            </tr>
-                            <tr width="550" height="10" border="0" bgcolor="#738e94">
-                                <td width="550" height="10" border="0" align="left" bgcolor="#738e94"></td>
-                            </tr>
-                        </table>
-                    </td>
-                    <td width="25" align="left" border="0" bgcolor="#738e94">
-                        <img src="{{base_url}}/images/mails/spacer.gif" width="25" height="1" border="0" bgcolor="#738e94" style="display:block;" />
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <!-- SPACE -->
-    <tr width="600" height="25" border="0" bgcolor="#ffffff">
-        <td width="600" height="25" align="center" border="0" bgcolor="#ffffff"></td>
-    </tr>
-    <!-- BODY -->
-    <tr width="600" height="25" border="0" bgcolor="#ffffff">
-        <td width="600" align="left" border="0" bgcolor="#ffffff">
-            <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff">
-                <tr width="600" border="0" bgcolor="#ffffff">
-                    <td width="25" align="left" border="0" bgcolor="#ffffff">
-                        <img src="{{base_url}}/images/mails/spacer.gif" width="25" height="1" border="0" bgcolor="#ffffff" style="display:block;" />
-                    </td>
-                    <td width="550" align="left" border="0" bgcolor="#ffffff">
-                        {% block body %}{% endblock %}
-                    </td>
-                    <td width="25" align="left" border="0" bgcolor="#ffffff">
-                        <img src="{{base_url}}/images/mails/spacer.gif" width="25" height="1" border="0" bgcolor="#ffffff" style="display:block;" />
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
-    <!-- SPACE -->
-    <tr width="600" height="25" border="0" bgcolor="#ffffff">
-        <td width="600" height="25" align="center" border="0" bgcolor="#ffffff"></td>
-    </tr>
-    <!-- FOOTER -->
 
-    <tr width="600" height="25" border="0" bgcolor="#ffffff">
-        <td width="600" align="left" border="0" bgcolor="#ffffff">
-            <table width="600" cellpadding="0" cellspacing="0" border="0" bgcolor="#ffffff">
-                <tr width="600" border="0" bgcolor="#ffffff">
-                    <td width="25" align="left" border="0" bgcolor="#ffffff">
-                        <img src="{{base_url}}/images/mails/spacer.gif" width="25" height="1" border="0" bgcolor="#ffffff" style="display:block;" />
-                    </td>
-                    <td width="550" align="left" border="0" bgcolor="#ffffff">
-                        {% block footer %}{% endblock %}
-                    </td>
-                    <td width="25" align="left" border="0" bgcolor="#ffffff">
-                        <img src="{{base_url}}/images/mails/spacer.gif" width="25" height="1" border="0" bgcolor="#ffffff" style="display:block;" />
-                    </td>
+<!--
+    body
+        center
+            table#bodyTable
+                tr
+                    td#bodyCell
+                        table.templateContainer
+                            /* Content Newsletter */
+                        /table
+                    /td
+                /tr
+            /table
+        /center
+    /body
+-->
+
+<body bgcolor="#F0F0F0" leftmargin="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">
+    <center>
+        <!-- main container table -->
+        <table border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" id="bodyTable">
+            <tr>
+                <td align="center" height="100%" valign="top" width="100%" id="bodyCell">
+
+
+                <!--[if gte mso 9]>
+                <table align="center" border="0" cellspacing="0" cellpadding="0" width="600">
+                <tr>
+                <td align="center" valign="top">
+                <![endif]-->
+
+
+
+                    <!-- COMPANY LOGO -->
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="templateContainer">
+                        <tr>
+                            <td align="center" valign="top">
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#F0F0F0" style="background-color:#F0F0F0">
+                                    <tr>
+                                        <td valign="top" align="center" height="10" style="height:50px;width:100%" width="100%"></td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top">
+                                            <table style="background-color:#F0F0F0" width="100%" bgcolor="#F0F0F0" cellspacing="0" cellpadding="0" align="center">
+                                                <tr>
+                                                    <td valign="top" align="center" style="width:100%" width="100%">
+                                                        <img src="https://www.alpixel.fr/sites/default/files/logo.png" alt="" width="200" height="100" style="max-width:200px; padding-bottom: 0; display: inline !important; vertical-align: bottom;" />
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td valign="top" align="center" height="10" style="height:50px;width:100%" width="100%"></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+
+                    <!-- BLOCK HEADER -->
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="templateContainer">
+                        <tr>
+                            <td align="center" valign="top">
+
+                                <!-- Content -->
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#FFFFFF" style="background-color:#000000">
+                                    <tr>
+                                        <td valign="top">
+                                            <table style="background-color:#000000" width="100%" bgcolor="#FFFFFF" cellspacing="0" cellpadding="0" align="center">
+
+                                                <!-- SPACE -->
+                                                <tr>
+                                                    <td width="10%" height="15px" style="height:15px;width:10%"></td>
+                                                    <td width="80%" height="15px" style="height:15px;width:80%"></td>
+                                                    <td width="10%" height="15px" style="height:15px;width:10%"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td width="10%"  style="width:10%"></td>
+                                                    <td width="80%" valign="top" align="center" style="width:80%">
+                                                        <font face="Arial, sans-serif" color="#FFFFFF" style="display:block;font-size:15px;text-align:left;line-height:25px;">
+                                                            {% block header %}{% endblock %}
+                                                        </font>
+                                                    </td>
+                                                    <td width="10%"  style="width:10%"></td>
+                                                </tr>
+
+                                                <!-- SPACE -->
+                                                <tr>
+                                                    <td width="10%" height="15px" style="height:15px;width:10%"></td>
+                                                    <td width="80%" height="15px" style="height:15px;width:80%"></td>
+                                                    <td width="10%" height="15px" style="height:15px;width:10%"></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+
+
+                    <!-- BLOCK BODY -->
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="templateContainer">
+                        <tr>
+                            <td align="center" valign="top">
+
+                                <!-- Content -->
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#FFFFFF" style="background-color:#FFFFFF">
+                                    <tr>
+                                        <td valign="top">
+                                            <table style="background-color:#FFFFFF" width="100%" bgcolor="#FFFFFF" cellspacing="0" cellpadding="0" align="center">
+
+                                                <!-- SPACE -->
+                                                <tr>
+                                                    <td width="10%" height="20px" style="height:20px;width:10%"></td>
+                                                    <td width="80%" height="20px" style="height:20px;width:80%"></td>
+                                                    <td width="10%" height="20px" style="height:20px;width:10%"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td width="10%" style="width:10%"></td>
+                                                    <td width="80%" valign="top" align="center" style="width:80%">
+                                                        <font face="Arial, sans-serif" color="#000000" style="display:block;font-size:12px;text-align:left;line-height:20px;">
+                                                            {% block body %}{% endblock %}
+                                                        </font>
+                                                    </td>
+                                                    <td width="10%" style="width:10%"></td>
+                                                </tr>
+
+                                                <!-- SPACE -->
+                                                <tr>
+                                                    <td width="10%" height="20px" style="height:20px;width:10%"></td>
+                                                    <td width="80%" height="20px" style="height:20px;width:80%"></td>
+                                                    <td width="10%" height="20px" style="height:20px;width:10%"></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+
+
+
+                    <!-- BLOCK FOOTER -->
+                    <table border="0" cellpadding="0" cellspacing="0" width="100%" class="templateContainer">
+                        <tr>
+                            <td align="center" valign="top">
+                                <!-- FOOTER -->
+                                <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                                    <tr>
+                                        <td valign="top">
+
+                                            <table style="background-color:#F0F0F0" width="100%" bgcolor="#F0F0F0" cellspacing="0" cellpadding="0" align="center">
+
+                                                <!-- SPACE -->
+                                                <tr>
+                                                    <td valign="top" align="center" height="30" style="height:30px;width:100%" width="100%"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td valign="top" align="center">
+                                                        <div style="padding-left:20px;padding-right:20px;" class="paddingLeft20 paddingRight20">
+                                                            <div style="text-align:center;">
+                                                                <img src="https://www.alpixel.fr/sites/default/files/logo.png" alt="" width="150" height="75" style="max-width:150px; padding-bottom: 0; display: inline !important; vertical-align: bottom;" />
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+
+                                                <!-- SPACE -->
+                                                <tr>
+                                                    <td valign="top" align="center" height="20" style="height:20px;width:100%" width="100%"></td>
+                                                </tr>
+
+                                                <tr>
+                                                    <td valign="top" align="center">
+                                                        <div style="padding-left:20px;padding-right:20px;" class="paddingLeft20 paddingRight20">
+                                                            <font face="Arial, sans-serif" color="#000000" style="display:block;font-size:11px;text-align:center;line-height:18px;">
+                                                                Rue Jean de la Fontaine, Bâtiment B - 73420 VIVIERS-DU-LAC<br />
+                                                                Tél. 04 79 00 00 00 - Fax 04 79 00 00 00<br />
+                                                                contact@exemple.fr<br />
+                                                            </font>
+                                                            <font face="Arial, sans-serif" color="#000000" style="display:block;font-size:13px;text-align:center;font-weight:700;line-height:18px;">
+                                                                <strong><a href="{{base_url}}" style="color:#000000;text-decoration:none;">{{base_url}}</a></strong>
+                                                            </font>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <!-- SPACE -->
+                                                <tr>
+                                                    <td valign="top" align="center" height="20" style="height:20px;width:100%" width="100%"></td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <!-- /end table footer -->
+
+
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- /end table 600px -->
+
+
+                <!--[if gte mso 9]>
+                </td>
                 </tr>
-            </table>
-        </td>
-    </tr>
-    <!-- SPACE + BORDER -->
-    <tr width="600" height="25" border="0" bgcolor="#ffffff">
-        <td width="600" height="25" align="center" border="0" bgcolor="#ffffff" style="border-top: 1px solid #d3d3d3;"></td>
-    </tr>
-    <!-- INFO -->
-    <tr width="600" border="0" bgcolor="#ffffff">
-        <td width="600" align="center" bgcolor="#ffffff">
-            <font face="Arial, Helvetica, sans-serif" size="2" color="#666" style="font-size:12px;">
-                <span style="color:#738e94;"><br /><a href="{{base_url}}" style="color:#738e94;">{{base_url}}</a>
-            </font>
-        </td>
-    </tr>
-</table>
+                </table>
+                <![endif]-->
+                </td> <!-- /end main table cell -->
+            </tr> <!-- /end main table row -->
+        </table> <!-- /end main table table -->
+    </center>
 </body>
 </html>
