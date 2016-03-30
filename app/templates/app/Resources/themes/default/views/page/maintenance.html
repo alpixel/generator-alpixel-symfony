@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{TITRE SITE}} - Maintenance</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <meta http-equiv="refresh" content="30" >
+
+        <style type="text/css">
+            * {
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                box-sizing: border-box;
+            }
+            body.maintenance{
+                background:url('bg_admin.jpg') no-repeat;
+                -webkit-background-size: cover; /* pour Chrome et Safari */
+                -moz-background-size: cover; /* pour Firefox */
+                -o-background-size: cover; /* pour Opera */
+                background-size: cover; /* version standardisée */
+                background-repeat:no-repeat;
+                background-position: center center;
+                background-attachment: fixed;
+                background-size:100% 100%\9;
+                background-position: center top\9;
+                font-family:'Helvetica Neue',Arial,sans-serif;
+                height:100vh;
+                display: -ms-flexbox;
+                display: -webkit-flex;
+                display: flex;
+                -webkit-flex-direction: row;
+                -ms-flex-direction: row;
+                flex-direction: row;
+                -webkit-flex-wrap: nowrap;
+                -ms-flex-wrap: nowrap;
+                flex-wrap: nowrap;
+                -webkit-justify-content: center;
+                -ms-flex-pack: center;
+                justify-content: center;
+                -webkit-align-content: center;
+                -ms-flex-line-pack: center;
+                align-content: center;
+                -webkit-align-items: center;
+                -ms-flex-align: center;
+                align-items: center;
+            }
+
+            .wrap-maintenance {
+                text-align:center;
+                width:400px;
+                height:400px;
+                background-color:white;
+                text-align:center;
+                color:#1d1d1d;
+                padding:30px;
+                border-top:13px solid #00777d;
+                border-bottom:13px solid #ffd100;
+                border-left:13px solid #e67e22;
+                border-right:13px solid #2980b9;
+
+                -webkit-border-radius:50%;
+                -moz-border-radius:50%;
+                -ms-border-radius:50%;
+                -o-border-radius:50%;
+                border-radius:50%;
+
+                -webkit-box-shadow:0 0 15px 0 rgba(0,0,0,0.4);
+                -moz-box-shadow:0 0 15px 0 rgba(0,0,0,0.4);
+                -ms-box-shadow:0 0 15px 0 rgba(0,0,0,0.4);
+                -o-box-shadow:0 0 15px 0 rgba(0,0,0,0.4);
+                box-shadow:0 0 15px 0 rgba(0,0,0,0.4);
+            }
+            .wrap-maintenance h1{color:#2a2a2a;font-size:23pt;line-height:40pt;margin:50px 0 0;}
+            .wrap-maintenance h2{color:#2a2a2a;font-size:18pt;line-height:30pt}
+            .wrap-maintenance hr{height:1px;background-color:#1d1d1d;border:0;margin:20px 0}
+            .wrap-maintenance p{font-size:15pt;font-style:italic}
+
+            @media screen and (max-width: 767px) {
+                .wrap-maintenance {
+                    width:300px;
+                    height:300px;
+                }
+                .wrap-maintenance h1{font-size:16pt;line-height:32pt;margin:25px 0 0;}
+                .wrap-maintenance h2{font-size:16pt;line-height:24pt}
+                .wrap-maintenance p{font-size:12pt;}
+            }
+        </style>
+    </head>
+
+    <body class="maintenance">
+        <div class="wrap-maintenance">
+            <h1>{{TITRE SITE}}</h1>
+            <h2>est en maintenance</h2>
+            <hr />
+            <p>Nous revenons dans<br />quelques minutes.</p>
+        </div>
+    </body>
+</html>
