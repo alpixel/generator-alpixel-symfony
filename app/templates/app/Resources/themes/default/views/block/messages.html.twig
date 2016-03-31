@@ -12,7 +12,5 @@
 
 
 {% if form is defined and form_errors(form)|trim is not empty %}
-    <div class="alert alert-error fa-exclamation-triangle">
-        {{form_errors(form)}}
-    </div>
+    {{form_errors(form)}}
 {% endif %}
