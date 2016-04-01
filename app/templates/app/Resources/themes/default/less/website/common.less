@@ -1,6 +1,7 @@
 /*
     * COMMON OOCSS FILE
         - Admin bar
+        - Pagination
 */
 // Admin bar
 .wrap-admin-edit-link {
@@ -31,4 +32,126 @@
             color:white;
         }
     }
+}
+
+// Pagination
+.paginate {
+    ._reset;
+    ._flex-display;
+
+
+    &>li {
+        margin:0 4px;
+
+        /* general style */
+        span,a {
+            display:block;
+            height:33px;
+            width:33px;
+            color:#686868;
+            background-color:white;
+            ._border-radius(100%);
+            text-align:center;
+            line-height:33px;
+            ._transition;
+
+            em {
+                font-style:inherit;
+            }
+        }
+
+        /* hover & current */
+        &.current span,
+        a:hover {
+            background-color:@green;
+            color:white;
+        }
+
+        /* ellipsis */
+        &.ellipsis {
+            span {
+                background-color:transparent
+            }
+        }
+
+        /* FIRST LINKS */
+        &.last,
+        &.next,
+        &.first,
+        &.previous {
+            margin:0;
+            a,span {
+                width:135px;
+                ._border-radius(0px);
+                font-size:0.87em;
+            }
+
+        }
+
+        &.previous {
+            margin-right:auto;
+        }
+
+        /* LAST LINKS */
+        &.next {
+            margin-left:auto;
+
+            i:before {
+                margin-left:10px;
+                margin-right:0;
+            }
+        }
+    }
+
+    ._tablet({
+        &>li {
+            span,a {
+                em {
+                    display:none;
+                }
+            }
+
+            &.last,
+            &.next,
+            &.first,
+            &.previous {
+
+                a,span {
+                    width:auto;
+                    padding:0 20px;
+
+                    i {
+                        font-size:1em;
+
+                        &:before {
+                            ._reset;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+
+    ._phone({
+        li.first,
+        li.last,
+        li.item {
+            display:none;
+        }
+
+        li.current,
+        li.previous,
+        li.next {
+            ._inline;
+        }
+
+        li.previous,
+        li.next {
+            a,span {
+                font-size:3rem;
+
+            }
+        }
+    });
 }
