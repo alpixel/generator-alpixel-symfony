@@ -4,6 +4,8 @@
 /* Override ChuckCSS vars */
 @import 'settings-override';
 
+
+// BODY, base CSS
 body {
     .cc-inside {
         ._inside(@tablet-mw);
@@ -25,24 +27,24 @@ body {
         font-size: 1.4rem;
 
         .cc-inside {
-            ._inside(100%);
+            ._inside(90%);
         }
     });
 }
 
 /* define text selection */
 ::-moz-selection {
-    background: black;
+    background: @primary;
 }
 ::selection {
-    background: black;
+    background: @primary;
 }
 
-/* Import jquery plugins less files */
-/*@import "jquery-plugins/flexslider";*/
+
 
 /* Import Helpers files */
-@import 'helpers/functions';
+@import 'helpers/animations';
+@import 'helpers/hamburger';
 @import 'helpers/cookies';
 @import 'helpers/outdated';
 @import 'helpers/tooltips';
@@ -56,3 +58,8 @@ body {
 @import "website/common";
 @import "website/homepage";
 @import "website/header-footer";
+
+
+/* *** jQUERY PLUGINS *** */
+// @import "jquery-plugins/flexslider.less";
+// @import "jquery-plugins/fancybox.less";

@@ -34,7 +34,7 @@ var vars = {
     // './web/lib/jquery.scrollTo/jquery.scrollTo.js',
     // './web/lib/flexslider/jquery.flexslider.js',
     // './web/lib/backstretch/jquery.backstretch.js',
-    // './web/lib/fancybox/source/jquery.fancybox.css',
+    // './web/lib/fancybox/source/jquery.fancybox.js',
   ]
 };
 

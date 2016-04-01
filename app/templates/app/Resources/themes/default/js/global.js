@@ -106,7 +106,25 @@
             e.preventDefault();
         });
 
-                /*
+
+        /*
+            -- @ MAIN MENU PHONE @ --
+        */
+        $('.open-menu button').on('click',function(e){
+            e.preventDefault();
+            if($(this).hasClass('is-active')) {
+                $('html, body').removeClass('opened-menu');
+                $('.wrap-main-menu').removeClass('shown');
+                $(this).removeClass('is-active');
+            } else {
+                $('html, body').addClass('opened-menu');
+                $('.wrap-main-menu').addClass('shown');
+                $(this).addClass('is-active');
+            }
+        });
+
+
+        /*
             -- @ FLEXSLIDER @ --
         */
         // if($('.flexslider').length) {
@@ -159,6 +177,107 @@
         //             $(this).backstretch(imgName);
         //     });
         // }
+
+
+
+
+        /*
+            -- @ BOOTSTRAP @ --
+        */
+        // Classical tooltips
+        // if ($('[data-toggle="tooltip"]').length)
+        //     $('[data-toggle="tooltip"]').tooltip();
+
+        // if ($('[data-toggle="tooltip-error"]').length) {
+        //     $('[data-toggle="tooltip-error"]').tooltip({
+        //         template: '<div class="tooltip error" role="tooltip"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
+        //     });
+        // }
+
+        // if (currentWindowWidth > smartWidthMax) {
+        //     $("body").affix({
+        //         offset: {top: 0}
+        //     });
+        // }
+
+
+
+
+        /*
+            -- @ ChuckCSS Modals @ --
+        */
+        // $('.modal-open').on('click', function (e) {
+        //     e.preventDefault();
+
+        //     var modal = $(this).data('target');
+        //     var modalElement = $(document.getElementById(modal));
+
+        //     if (modalElement.length) {
+        //         $('body').addClass('opened-modal');
+        //         modalElement.addClass('active');
+        //     } else {
+        //         alert('ChuckCSS error : modal with attribute id="' + modal + '" is not defined!');
+        //     }
+        // });
+
+        // /* Close modal */
+        // $('.modal:not([data-disabled-overlay])')
+        //     .find('.modal-overlay')
+        //     .add('.modal .modal-close')
+        //     .on('click', function (e) {
+
+        //         if ($(this).parent().hasClass('active'))
+        //             $(this).parent().removeClass('active');
+
+        //         if (!$('.modal.active').length)
+        //             $('body').removeClass('opened-modal');
+        //     });
+
+
+
+        /*
+            -- @ WOW Plugin @ --
+        */
+        // wow = new WOW({
+        //     // boxClass:     'wow',      // default : Class name that reveals the hidden box when user scrolls.
+        //     // animateClass: 'animated', // default : Class name that triggers the CSS animations (’animated’ by default for the animate.css library)
+        //     // offset:       0,          // default : Define the distance between the bottom of browser viewport and the top of hidden box. When the user scrolls and reach this distance the hidden box is revealed.
+        //     // mobile:       true,       // default : Turn on/off WOW.js on mobile devices.
+        //     // live:         true        // default : consatantly check for new WOW elements on the page.
+        //     offset : 150
+        // });
+        // wow.init();
+
+
+        /*
+            -- @ FANCYBOX @ --
+            * Init FancyBox gallery
+        */
+        // $("a.fancy").fancybox({
+        //     openEffect  : 'elastic',
+        //     closeEffect : 'elastic',
+        //     maxHeight : 650,
+        //     maxWidth : 1200
+        // });
+        // $(".youtube").fancybox({
+        //     openEffect  : 'elastic',
+        //     closeEffect : 'elastic',
+        //     maxHeight : 650,
+        //     maxWidth : 1200,
+        //     padding : 0,
+        //     type : 'iframe'
+        // });
+
+
+        /*
+            -- @ SCROLLTO @ --
+            * ScrollTo plugin
+        */
+        // $.scrollTo($(seelctor),350,{offset:-50, axis:'y'});
+
+
+
+
 
 
     });

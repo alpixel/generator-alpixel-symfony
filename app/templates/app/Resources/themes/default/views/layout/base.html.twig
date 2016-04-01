@@ -95,16 +95,44 @@
             <a href="#" class="accept-cookie close btn cc-bg-blue">J'ai compris</a>
         </div>
 
+
         {# Main Header #}
         {% block header %}{% endblock %}
+
 
         {# CONTENT #}
         <div id="content">
             {% block page %}{% endblock %}
         </div>
 
+
         {# Main Footer #}
         {% block footer %}{% endblock %}
+
+
+        {# Modals #}
+        {% block modal %}
+        <div id="modal-id" class="modal">
+            <button class="modal-close"></button>
+
+            <div class="modal-overlay"></div>
+
+            <div class="modal-content">
+                <div class="modal-header">
+                    Modal title
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Hamburger doner alcatra sirloin bresaola porchetta tenderloin.<br />Ribeye bacon meatball ball tip beef ribs leberkas capicola corned beef.
+                    </p>
+                </div>
+                <div class="modal-footer cc-txt-center">
+                    <button class="fa-save cc-bg-primary">Save</a>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+
 
         {% block javascripts %}
           <script type="text/javascript">
