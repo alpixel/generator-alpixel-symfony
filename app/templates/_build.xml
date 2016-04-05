@@ -48,7 +48,7 @@
 
   <target name="vendors" description="Update vendors">
     <exec executable="composer" failonerror="true">
-        <arg value="update" />
+        <arg value="install" />
         <arg value="--prefer-dist" />
         <arg value="--no-interaction" />
     </exec>
