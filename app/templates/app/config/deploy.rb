@@ -104,14 +104,8 @@ after "deploy:restart" do
     run "ln -s #{shared_path}/vendor #{current_path}/vendor"
     run "ln -s #{shared_path}/composer.lock #{current_path}/composer.lock"
 
-
-    if "#{deploy_mode}" == 'quick'
-        run "composer install --optimize-autoloader --prefer-dist --working-dir=#{current_path}"
-    else
-        run "composer update --no-dev --prefer-dist --no-progress --no-interaction --optimize-autoloader --working-dir=#{current_path}"
-    end
-
-
+    run "composer install --optimize-autoloader --prefer-dist --working-dir=#{current_path}"
+    
     #Mise a jour des caches
     run "php #{current_path}/app/console cache:clear --env='prod' --no-debug"
     run "php #{current_path}/app/console assetic:dump --env='prod' --no-debug"
