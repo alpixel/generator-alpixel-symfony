@@ -307,7 +307,7 @@ module.exports = yeoman.Base.extend({
   requireBundles: function() {
     var done = this.async();
 
-    var bundles = ['stof/doctrine-extensions-bundle'];
+    var bundles = ['stof/doctrine-extensions-bundle', 'alpixel/deployer-recipes'];
 
     for (var i = 0; i < this.bundles['bundlesCustom'].length; i++) {
       if (this.bundles['bundlesCustom'][i] == 'sonata-project') {
