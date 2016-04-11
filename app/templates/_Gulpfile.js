@@ -9,6 +9,8 @@ var uglify = require('gulp-uglify');
 var gutil = require('gulp-util');
 var imagemin = require('gulp-imagemin');
 var rewriteCSS = require('gulp-rewrite-css');
+var autoprefixer = require('gulp-autoprefixer');
+
 
 /** Variable to edit **/
 var vars = {
@@ -50,6 +52,7 @@ gulp.task('app_less', function() {
       .pipe(cssnano({
         'postcss-minify-font-values': true
       }))
+      .pipe(autoprefixer("last 2 versions"))
       .pipe(sourcemaps.write())
       .pipe(rename({basename: 'app', suffix: '.min'}))
       .pipe(sourcemaps.write('maps', {addComment: false}))
@@ -72,6 +75,7 @@ gulp.task('vendor_css', function() {
     'postcss-minify-font-values': true
   }))
   .pipe(rename({suffix: '.min'}))
+  .pipe(autoprefixer("last 2 versions"))
   .pipe(sourcemaps.write('maps', {addComment: false}))
   .pipe(gulp.dest('web/css/'));
 });
