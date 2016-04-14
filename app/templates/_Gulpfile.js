@@ -15,6 +15,7 @@ var autoprefixer = require('gulp-autoprefixer');
 /** Variable to edit **/
 var vars = {
   theme: 'default',
+  admin: 'admin',
 
   //Include only the CSS from vendors or uncomment the needed lines
   //Do not include minified files
@@ -42,7 +43,8 @@ var vars = {
 
 /** Please do not edit this vars **/
 var path = {
-  theme_dir: 'app/Resources/themes/'+vars.theme
+  theme_dir: 'app/Resources/themes/'+vars.theme,
+  admin_dir: 'app/Resources/themes/' + vars.admin
 }
 
 gulp.task('app_less', function() {
@@ -125,9 +127,24 @@ gulp.task('imagemin', function() {
       .pipe(gulp.dest('web/img'));
 });
 
+gulp.task('wysiwyg_less', function () {
+    gulp.src(path.admin_dir + '/less/wysiwyg.less')
+        .pipe(sourcemaps.init())
+        .pipe(less())
+        .pipe(concat('css/wysiwyg.min.css'))
+        .pipe(cssnano({
+            'postcss-minify-font-values': true
+        }))
+        .pipe(autoprefixer("last 2 versions"))
+        .pipe(sourcemaps.write('css/maps', {addComment: false}))
+        .pipe(gulp.dest('web'));
+});
+
+
 gulp.task('watch', function() {
     gulp.watch(path.theme_dir + '/less/**/*.less', ['app_less']);
     gulp.watch(path.theme_dir + '/js/**/*.js', ['app_js']);
+    gulp.watch(path.admin_dir + '/less/wysiwyg.less', ['wysiwyg_less']);
 });
 
 gulp.task('default', [
@@ -135,5 +152,6 @@ gulp.task('default', [
   'vendor_js',
   'app_js',
   'app_less',
-  'imagemin'
+  'imagemin',
+  'gulp wysiwyg_less'
 ]);
