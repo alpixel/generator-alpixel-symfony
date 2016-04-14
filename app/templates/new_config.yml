@@ -16,7 +16,7 @@ swiftmailer:
     port: '%mailer_port%'
     spool:
         type: memory
-        
+
 doctrine:
     dbal:
         connections:
@@ -116,3 +116,42 @@ twig:
     - "%kernel.root_dir%/Resources/themes/%theme%/views/"
     <% if (bundles['bundlesCustom'].indexOf('sonata-project') !== -1) { %>- "%kernel.root_dir%/Resources/themes/admin/views/"<% } %>
 
+
+<% if (bundles['bundlesCustom'].indexOf('alpixel/cmsbundle') !== -1) { %>
+ivory_ck_editor:
+    plugins:
+        fileuploader:
+            path:     "/bundles/alpixelmedia/fileuploader/"
+            filename: "plugin.js"
+    configs:
+        admin:
+            toolbar: "admin_bar"
+            format_tags: 'p;h1;h2;h3;pre'
+            filebrowserUploadRoute: 'upload_wysiwyg'
+            allowedContent: true
+            disallowedContent: 'script; *[on*]'
+            extraPlugins: 'fileuploader'
+            contentsCss: 'css/wysiwyg.min.css'
+    toolbars:
+        configs:
+            admin_bar:
+                - "@basicsStyles"
+                - "-"
+                - "@paragraph"
+                - "/"
+                - "@styles"
+                - "-"
+                - "@links"
+                - "/"
+                - "@clipboard"
+                - "-"
+                - "@upload"
+        items:
+            clipboard:      [ "Source", "-", "Save" ]
+            basicsStyles:    [ 'Bold','Italic','Underline','Strike','Subscript','Superscript','-','RemoveFormat' ]
+            paragraph:      [ 'NumberedList','BulletedList','-','Outdent','Indent','-','Blockquote','CreateDiv', '-','JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock','-','BidiLtr','BidiRtl','-','Table' ]
+            links:          [ 'Link','Unlink','Anchor' ]
+            insert:         [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak','Iframe' ]
+            styles:         [ 'Styles','Format','Font','FontSize' ]
+            colors:         [ 'TextColor','BGColor' ]
+            upload:         [ 'Uploader' ]
