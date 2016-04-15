@@ -160,3 +160,7 @@ twig:
             styles:         [ 'Styles','Format','Font','FontSize' ]
             colors:         [ 'TextColor','BGColor' ]
             upload:         [ 'Uploader' ]<% } %>
+
+<% if (bundles['bundlesCustom'].indexOf('alpixel/cmsbundle') !== -1) { %>alpixel_media:
+    upload_folder: "%kernel.root_dir%/../web/upload"
+    allowed_mimetypes: ["image/*", "application/pdf"]<% } %>
