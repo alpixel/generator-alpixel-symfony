@@ -117,8 +117,7 @@ twig:
     <% if (bundles['bundlesCustom'].indexOf('sonata-project') !== -1) { %>- "%kernel.root_dir%/Resources/themes/admin/views/"<% } %>
 
 
-<% if (bundles['bundlesCustom'].indexOf('alpixel/cmsbundle') !== -1) { %>
-ivory_ck_editor:
+<% if (bundles['bundlesCustom'].indexOf('alpixel/cmsbundle') !== -1) { %>ivory_ck_editor:
     plugins:
         fileuploader:
             path:     "/bundles/alpixelmedia/fileuploader/"
@@ -132,6 +131,12 @@ ivory_ck_editor:
             disallowedContent: 'script; *[on*]'
             extraPlugins: 'fileuploader'
             contentsCss: 'css/wysiwyg.min.css'
+            stylesSet : alpixel_styles
+    styles:
+        alpixel_styles:
+            - { name: "Image 100% largeur", element: "img",  attributes: { class: "block"}}
+            - { name: 'Image à gauche', element: 'img', attributes: { 'class': 'left' }}
+            - { name: 'Image à droite', element: 'img', attributes: { 'class': 'right' }}
     toolbars:
         configs:
             admin_bar:
@@ -154,4 +159,4 @@ ivory_ck_editor:
             insert:         [ 'Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak','Iframe' ]
             styles:         [ 'Styles','Format','Font','FontSize' ]
             colors:         [ 'TextColor','BGColor' ]
-            upload:         [ 'Uploader' ]
+            upload:         [ 'Uploader' ]<% } %>
