@@ -123,6 +123,16 @@
             }
         });
 
+        /*
+         -- @ BODY FIELDS @ --
+         * Add clearfix class for parent containing images on wywiwyg page
+         */
+        $('.body p, .body div').has('img.right, img.left').addClass('clearfix');
+        $('.body p, .body div').find('a[href*="pdf"], a[href*="jpg"], a[href*="png"], a[href*="jpeg"]').on('click', function (e) {
+            e.preventDefault();
+            window.open($(this).attr("href"));
+        });
+
 
         /*
             -- @ FLEXSLIDER @ --
