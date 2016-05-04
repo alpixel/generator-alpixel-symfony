@@ -94,7 +94,7 @@
         /*
             -- @ LINKS @ --
         */
-        $('a[href$=".pdf"],a.external-link').on('click',function(e){
+        $(document).on('click','a[href$=".pdf"], a.external-link',function(e){
             e.preventDefault();
             window.open($(this).attr("href"));
         });
