@@ -239,6 +239,15 @@ body {
             }
         }
 
+        img {
+            max-width:100%;
+
+            &.centered {
+                display:block;
+                margin:0 auto;
+            }
+        }
+
         // Basic tables
         &.no-lines {
             thead,
@@ -249,15 +258,6 @@ body {
                     border:2px dashed #eeeeee;
                     background-color:transparent;
                     color:@text-mc;
-
-                    img {
-                        max-width:100%;
-
-                        &.centered {
-                            display:block;
-                            margin:0 auto;
-                        }
-                    }
                 }
             }
         }
