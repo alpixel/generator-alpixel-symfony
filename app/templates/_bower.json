@@ -24,9 +24,8 @@
     "html5shiv": "3.*",
     "jquery.scrollTo": "^2.1.2",
     "wow.js": "1.*",
-    "ChuckCSS": "alpixel/ChuckCSS",
-    "bootstrap": "~3.3.6",
-    "Modernizr": "https://modernizr.com/download?flexbox-setclasses"
+    "ChuckCSS": "master",
+    "bootstrap": "~3.3.6"
   },
   "resolutions": {
     "jquery": "~2.2.0"

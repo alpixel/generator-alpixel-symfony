@@ -20,6 +20,7 @@ koala-config.json
 /vendor/
 /composer.phar
 
+
 # Custom
 node_modules
 web/upload/filters
@@ -32,4 +33,7 @@ behat.yml
 Gruntfile.js.*
 sitemap.*xml*
 web/lib
-npm-debug.log
+npm-debug.log*
+var/files
+app/Resources/translations
+rev-manifest.json
