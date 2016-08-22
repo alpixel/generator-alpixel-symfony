@@ -33,6 +33,7 @@
         <meta name="theme-color" content="#ffffff">
 
         <% if (bundles['bundlesCustom'].indexOf('alpixel/seobundle') !== -1) { %>{{ sonata_seo_link_canonical() }}<% } %>
+        <% if (bundles['bundlesCustom'].indexOf('alpixel/seobundle') !== -1) { %>{{ sonata_seo_lang_alternates() }}<% } %>
 
         {% block css %}
           <link rel="stylesheet" type="text/css" media="screen" href="css/vendor.min.css" />
